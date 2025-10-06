@@ -4,7 +4,6 @@
 ### charliem2003@github
 ### 07/2024
 ###
-### Regions map used: Bioregions_checklists
 ### Taxonomy used:    Planetary Biodiversity Inventory (PBI) for Plant Bugs
 ### Checklist used:   Planetary Biodiversity Inventory (PBI) for Plant Bugs
 ###
@@ -24,29 +23,29 @@ rm(list = ls())
 ### Libraries
 library(dplyr)
 library(tidyr)
-library(ggplot2)
-library(sf)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "miridae") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")   # dir that contains the function scripts
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir   <- "Diversity"                                  # project dir
+dataDir   <- file.path("PBI", "data", "directory")        # dir that contains the checklist data
 
-### Function for cleaning dates and extracting region info from inside brackets
-source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
+### You shouldn't need to adjust these folders
+resDir    <- file.path(projDir, "Intersections")          # dir to save results to
+funDir    <- file.path(projDir, "Analysis_functions")     # dir that contains the function scripts
+lookupDir <- file.path(resDir, "Look-up_tables")          # dir that contains look-up table for assigning bioregions
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
 #==================================================================================================#
+
+### Function for cleaning dates and extracting region info from inside brackets
+source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
 
 ### CoL Hemipterans - Miridae Data
 col_miridae <- read.csv(file.path(dataDir, "CoL_Hemiptera.csv"))%>%
   as_tibble()
 
 ### Spreadsheet with codes to assign to countries and provinces to bioregions
-bioregions <- read.csv(file.path(dataDir, "country_codes_BTAS_miridae.csv")) %>%
+bioregions <- read.csv(file.path(lookupDir, "country_codes_BTAS_miridae.csv")) %>%
   select(Regions, Bioregion, AsiaNative)
 
 #==================================================================================================#
@@ -182,33 +181,8 @@ colSums(col_region[, c(bioregions, "Unknown")])
 write.csv(col_region, file.path(resDir, "Intersections", "Intersections_bioregions_miridae.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-
-rich <- data.frame(Bioregion = names(col_region[, -c(1:6)]),
-                   Rich = colSums(col_region[, -c(1:6)]))
-rich <- left_join(regions, rich, by = "Bioregion")
-
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank()) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(rich$Rich)), log10(max(rich$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = rich, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(rich),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
+rm(list = ls())

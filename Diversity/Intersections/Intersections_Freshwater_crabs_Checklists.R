@@ -8,13 +8,6 @@
 ### charliem2003@github
 ### 12/2024
 ###
-### Regions map used: Bioregions_checklists
-### Taxonomy used:    ?
-### Checklist used:   ?
-###
-### CITATION:
-### ?
-###
 ### saves csv with the presence-absence of each species within each bioregion
 ####################################################################################################
 
@@ -25,20 +18,17 @@
 rm(list = ls())
 
 ### Libraries
-library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
-library(ggplot2)
-library(sf)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "freshwater_crabs") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-gadmDir   <- file.path(baseDir, "spatial_data", "regions", "countries", "GADM", "GADM_4.1") # dir with gadm data
-taxonDir  <- file.path(baseDir, "NUS", "BTAS", "BTAS_data", "taxonomies", "GBIF_backbone") # dir that contains GBIF taxonomic backbone
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir   <- "Diversity"                                  # project dir
+dataDir   <- file.path("Crab", "data", "directory")       # dir that contains the rangemaps data
+
+### You shouldn't need to adjust these folders
+resDir    <- file.path(projDir, "Intersections")          # dir to save results to
+lookupDir <- file.path(resDir, "Look-up_tables")          # dir that contains look-up table for assigning bioregions
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
@@ -70,7 +60,7 @@ crabs <- crabs %>%
           .by = Species)
 
 ### Spreadsheet with codes to assign to countries and provinces to bioregions
-bioregions <- read.csv(file.path(dataDir, "country_codes_BTAS_freshwater_crabs.csv")) %>%
+bioregions <- read.csv(file.path(lookupDir, "country_codes_BTAS_freshwater_crabs.csv")) %>%
   select(Region, Bioregion, AsiaNative)
 
 #==================================================================================================#
@@ -147,35 +137,8 @@ colSums(crabs[, -c(1:5)])
 write.csv(crabs, file.path(resDir, "Intersections", "Intersections_bioregions_freshwater_crabs.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness and turnover
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-
-rich <- data.frame(Bioregion = names(crabs[, -c(1:5)]),
-                   Rich = colSums(crabs[, -c(1:5)]))
-rich <- left_join(regions, rich, by = "Bioregion") %>%
-  filter(!is.na(Rich))
-
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank()) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(rich$Rich)), log10(max(rich$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = rich, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(rich),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
-
+rm(list = ls())

@@ -7,8 +7,8 @@
 ### charliem2003@github
 ### 12/2024
 ###
-### Regions map used: Bioregions_checklists_noPalawan
 ### Taxonomy used:    https://chilobase.biologia.unipd.it/
+###                   GBIF taxonomic backbone is needed for family info (https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c)
 ### Checklist used:   https://chilobase.biologia.unipd.it/
 ###
 ### CITATION:
@@ -30,16 +30,14 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
-library(ggplot2)
-library(sf)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "chilopods", "ChiloBase") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-gadmDir   <- file.path(baseDir, "spatial_data", "regions", "countries", "GADM", "GADM_4.1") # dir with gadm data
-taxonDir  <- file.path(baseDir, "NUS", "BTAS", "BTAS_data", "taxonomies", "GBIF_backbone") # dir that contains GBIF taxonomic backbone
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir  <- "Diversity"                                  # project dir
+dataDir  <- file.path("ChiloBase", "data", "directory")  # dir that contains the checklist data
+taxonDir <- file.path("GBIF", "backbone", "directory")   # dir that contains GBIF taxonomic backbone (for families)
+
+### You shouldn't need to adjust these folders
+resDir   <- file.path(projDir, "Intersections")          # dir to save results to
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
@@ -155,35 +153,8 @@ table(all$AsiaEndemic)
 write.csv(all, file.path(resDir, "Intersections", "Intersections_bioregions_chilopods.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness and turnover
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-all <- read.csv(file.path(resDir, "Intersections", "Intersections_bioregions_chilopods.csv"))
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-regions$Bioregion[regions$Bioregion == "Palawan"] <- "Philippines"
-
-rich <- data.frame(Bioregion = names(all[, -c(1:5)]),
-                   Rich = colSums(all[, -c(1:5)]))
-rich <- left_join(regions, rich, by = "Bioregion")
-
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank()) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(rich$Rich)), log10(max(rich$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = rich, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(rich),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
+rm(list = ls())

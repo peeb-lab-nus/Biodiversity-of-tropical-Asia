@@ -59,20 +59,30 @@ misc.dir <- file.path(main.dir, "BTAS_data","taxonomies")
 output.dir <- file.path(main.dir, "Intersections", "Intersections")  # dir to save checklists to
 fun.dir     <- file.path(main.dir, "Analysis_functions")              # dir that contains the function scripts
 
-### Function for extracting description year from authorships
-source(file.path(fun.dir, "Discovery_rates", "clean_publication_dates.R"))
+
+
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir   <- "Diversity"                                  # project dir
+dataDir   <- file.path("POWO", "data", "directory")       # dir that contains the checklist data
+
+### You shouldn't need to adjust these folders
+resDir    <- file.path(projDir, "Intersections")          # dir to save results to
+funDir    <- file.path(projDir, "Analysis_functions")     # dir that contains the function scripts
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
 #==================================================================================================#
 
+### Function for extracting description year from authorships
+source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
+
 # IMPORT DATA ========================
-plant_names <- read.table(file.path(powo.dir, "wcvp_v13", "wcvp_names.csv"),
+plant_names <- read.table(file.path(dataDir, "wcvp_v13", "wcvp_names.csv"),
                           header = TRUE, sep = "|", quote = "", fill = TRUE, encoding = "UTF-8")
 length(unique(plant_names$plant_name_id))  # 1,431,677
 sum(duplicated(plant_names$plant_name_id)) # checking for duplicates
 
-plant_dist <- read.table(file.path(powo.dir, "wcvp_v13","wcvp_distribution.csv"),
+plant_dist <- read.table(file.path(dataDir, "wcvp_v13","wcvp_distribution.csv"),
                          header = TRUE, sep = "|", quote = "", fill = TRUE, encoding = "UTF-8")
 length(unique(plant_dist$plant_name_id))   # 440,341 names
 all(unique(plant_dist$plant_name_id) %in% unique(plant_names$plant_name_id)) # all are in plant_name
@@ -213,35 +223,6 @@ trop_asia_plant_mat <- acast(formula = plant_name_id ~ region,
                           "taxon_name")],
             by = "plant_name_id")
 
-# clean_publication_dates <- function(x, max = TRUE){
-#   # Cleaning publication dates from the WCVP data
-#   #
-#   # Arguments:
-#   #   x, chr, vector of publication dates (`first_published`)  
-#   #   max, logical, whether to choose the oldest year in the string (if FALSE, then minimum is taken)
-#   #
-#   # Returns:
-#   #   numeric
-#   
-#   res <- vector()
-#   
-#   for(i in 1:length(x)){
-#     if(x[i] == ""){
-#       res[i] <- NA
-#     } else {
-#       match_positions <- gregexpr("[0-9]+", text = x[i])
-#       numbers <- regmatches(x[i], match_positions)  
-#       numbers_vector <- as.numeric(unlist(numbers))
-#       if(max == TRUE){
-#         res[i] <- max(numbers_vector)
-#       } else {
-#         res[i] <- min(numbers_vector)
-#       }  
-#     }
-#   }
-#   return(res)
-# }
-
 nrow(trop_asia_plant_mat) # 74,662
 sum(trop_asia_plant_mat$first_published == "") # 45 missing data points
 sum(is.na(trop_asia_plant_mat$first_published)) # no NAs
@@ -264,8 +245,8 @@ trop_asia_plant_mat_final <- trop_asia_plant_mat2 %>%
   left_join(plant_names[c("plant_name_id", "first_published")],
             by = c("basionym_ref" = "plant_name_id")) %>%
   mutate("basionym_published_year" = clean_publication_dates(first_published)) %>%
-  rename(Species = species) %>%
-  rename(Genus = genus) %>%
+  dplyr::rename(Species = species) %>%
+  dplyr::rename(Genus = genus) %>%
   mutate(Species = paste(Genus, Species, sep = "_")) %>%
   mutate(Family = family) %>%
   select(c("plant_name_id",
@@ -280,7 +261,6 @@ trop_asia_plant_mat_final <- trop_asia_plant_mat2 %>%
            "Species",
            "taxon_name",
            "Indian_Subcontinent",
-           # "Laccadives and Maldives",
            "IndoChina",
            "Borneo",
            "Malaya",
@@ -299,7 +279,7 @@ range(trop_asia_plant_mat_final$taxon_published_year, na.rm = TRUE) # 1753 to 20
 
 # Final data frame
 trop_asia_plant_mat_final <- trop_asia_plant_mat_final %>%
-  rename(Year = basionym_published_year) %>%
+  dplyr::rename(Year = basionym_published_year) %>%
   select(Species, Genus, Family, Year, AsiaEndemic,
          Indian_Subcontinent, IndoChina, Andamans, Philippines, Malaya, Sumatra, Java, Borneo,
          Sulawesi, Lesser_Sundas, Maluku, New_Guinea)
@@ -365,23 +345,24 @@ sum(trop_asia_plant_mat_final$Family %in% angiosperm_families)                  
 sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% angiosperm_families]) #  59,631 endemic species
 
 # Save csvs
-# write.csv(trop_asia_plant_mat_final,
-#           file.path(output.dir, "Intersections_bioregions_vascularplants.csv"),
-#           row.names = FALSE)
-
 write.csv(subset(trop_asia_plant_mat_final, Family %in% lycophyte_families),
-          file.path(output.dir, "Intersections_bioregions_lycophytes.csv"),
+          file.path(resDir, "Intersections", "Intersections_bioregions_lycophytes.csv"),
           row.names = FALSE)
 
 write.csv(subset(trop_asia_plant_mat_final, Family %in% fern_families),
-          file.path(output.dir, "Intersections_bioregions_ferns.csv"),
+          file.path(resDir, "Intersections", "Intersections_bioregions_ferns.csv"),
           row.names = FALSE)
 
 write.csv(subset(trop_asia_plant_mat_final, Family %in% gymnosperm_families),
-          file.path(output.dir, "Intersections_bioregions_gymnosperms.csv"),
+          file.path(resDir, "Intersections", "Intersections_bioregions_gymnosperms.csv"),
           row.names = FALSE)
 
 write.csv(subset(trop_asia_plant_mat_final, Family %in% angiosperm_families),
-          file.path(output.dir, "Intersections_bioregions_angiosperms.csv"),
+          file.path(resDir, "Intersections", "Intersections_bioregions_angiosperms.csv"),
           row.names = FALSE)
 
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
+
+rm(list = ls())

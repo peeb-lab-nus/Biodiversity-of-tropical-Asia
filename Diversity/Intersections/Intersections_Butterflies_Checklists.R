@@ -6,19 +6,14 @@
 ### charliem2003@github
 ### 07/2024
 ###
-### Regions map used: Bioregions_checklists
 ### Taxonomy used:    Personal updates to Lamas, G. (2015) Catalog of the butterflies (Papilionoidea)
 ### Checklist used:   David Lohman and Peggie Djunijanti
-### Endemism determined from: Pinkert, Stefan, Vijay Barve, Robert Guralnick, and Walter Jetz. 2022.
-###   Global Geographical and Latitudinal Variation in Butterfly Species Richness Captured through
-###   a Comprehensive Country-Level Occurrence Database.” Global Ecology and Biogeography 31(5): 830–39.
-###   https://doi.org/10.1111/geb.13475.
-### Pinkert, Stefan; Barve, Vijay; Guralnick, Rob; Jetz, Walter (2022), Data for: Global geographic
-###   and latitudinal variation in butterfly species richness captured through a comprehensive country-level
-###   occurrence database, Dryad, Dataset, https://doi.org/10.5061/dryad.cz8w9gj47
-###
-### CITATION:
-###   ?
+### Endemism determined from:
+###   Pinkert, Stefan; Barve, Vijay; Guralnick, Rob; Jetz, Walter (2022), Data for: Global geographic
+###     and latitudinal variation in butterfly species richness captured through a comprehensive country-level
+###     occurrence database, Dryad, Dataset, https://doi.org/10.5061/dryad.cz8w9gj47
+###   Yau, E.Y.H., Jones, E.E., Tsang, T.P.N. et al. Spatial occurrence records and distributions of 
+###     tropical Asian butterflies. Sci Data 12, 1004 (2025). https://doi.org/10.1038/s41597-025-05333-w
 ###
 ### saves csv with the presence-absence of each species within each bioregion
 ####################################################################################################
@@ -35,30 +30,46 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
-library(ggplot2)
 library(sf)
 library(terra)
 
 ### Locations of data, scripts and results
 baseDir    <- "/mnt/Work"
 spatialDir <- file.path(baseDir, "spatial_data", "biodiversity")       # dir that contains spatial data
-regionDir  <- file.path(baseDir, "NUS", "BTAS_data")                   # dir that contains the regions data
-dataDir    <- file.path(spatialDir, "checklists", "butterflies")       # dir that contains the checklist data
-resDir     <- file.path(baseDir, "NUS", "BTAS", "Intersections")       # dir to save results to
-funDir     <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")  # dir that contains the function scripts
-
+# regionDir  <- file.path(baseDir, "NUS", "BTAS_data")                   # dir that contains the regions data
+dataDir    <- file.path(spatialDir, "checklists", "butterflies", "Lohman")       # dir that contains the checklist data
 sdmDir <- file.path(spatialDir, "sdms", "butterflies", "Yu")
 occDir <- file.path(spatialDir, "occurrence_points", "butterflies", "Yu")
+pinkertDir <- file.path(spatialDir, "checklists", "butterflies", "Pinkert_MOL")
+gadmDir <- "/mnt/Work/spatial_data/regions/countries/GADM"
+# resDir     <- file.path(baseDir, "NUS", "BTAS", "Intersections")       # dir to save results to
+# funDir     <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")  # dir that contains the function scripts
 
-### Function for cleaning dates and extracting region info from inside brackets
-source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
+
+
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir    <- "Diversity"                                    # project dir
+# dataDir    <- file.path("Butterfly", "data", "directory")    # dir that contains the checklist data
+# sdmDir     <- file.path("Yau", "SDM", "directory")           # dir containing SDM outputs from Yau
+# occDir     <- file.path("Yau", "point", "directory")         # dir containing ocurrence points from Yau
+# pinkertDir <- file.path("Pinkert", "checklist", "directory") # dir containing ocurrence points from Yau
+# gadmDir    <- file.path("GADM", "directory")                 # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
+
+### You shouldn't need to adjust these folders
+resDir  <- file.path(projDir, "Intersections")            # dir to save results to
+funDir  <- file.path(projDir, "Analysis_functions")       # dir that contains the function scripts
+dataDir <- file.path(projDir, "Data")                      # dir that contains the subregions data
+
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
 #==================================================================================================#
 
+### Function for cleaning dates and extracting region info from inside brackets
+source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
+
 ### Data for each region is stored in individual sheets in an xlsx file
-filePath <- file.path(dataDir, "Lohman", "Asian_Butterfly_Distributions_20240702.xlsx")
+filePath <- file.path(dataDir, "Asian_Butterfly_Distributions_20240702.xlsx")
 
 ### Read in and append individual data sheets - 4,757 species
 all <- bind_rows(data.frame(Bioregion = "Indian_Subcontinent", read_xlsx(filePath, "SouthAsia_List")),
@@ -93,18 +104,18 @@ global <- read_excel(filePath, sheet = "GLOBAL_BUTTERFLY_LIST") %>%
   distinct()
 
 ### Data from Pinkert et al 2022 for determining endemism
-pinkert <- read_csv(file.path(dataDir, "Pinkert_MOL", "BttflyCCL_long_format_20220401.csv")) %>%
+pinkert <- read_csv(file.path(pinkertDir, "BttflyCCL_long_format_20220401.csv")) %>%
   distinct() %>%
   mutate(Species = gsub(" ", "_", ValidBinomial))
 
 ### GADM codes for converting Pinkert Alpha3 codes to countries
-gadm_codes <- read.csv(file.path(dataDir, "Pinkert_MOL/gadm_codes.csv"))
+gadm_codes <- read.csv(file.path(pinkertDir, "gadm_codes.csv"))
 
 ### global GADM for masking out coastlines in SDM outputs
-gadm <- st_read(file.path(regionDir, "countries", "GADM_410_land_Equal_Area.gpkg"))
+gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
 
 ### Regions data
-regions <- st_read(file.path(regionDir, "Bioregions", "Bioregions_checklists_noJapan.gpkg"))
+regions <- st_read(file.path(dataDir, "Bioregions_checklists.gpkg"))
 
 #==================================================================================================#
 #------------------------------------ Determine intersections -------------------------------------#
@@ -315,35 +326,8 @@ table(all$AsiaEndemic, useNA = "always")
 write.csv(all, file.path(resDir, "Intersections", "Intersections_bioregions_butterflies.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness and turnover
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-all <- read.csv(file.path(resDir, "Intersections", "Intersections_bioregions_butterflies.csv"))
-regions <- st_read(file.path(regionDir, "Bioregions", "Bioregions_checklists_noJapan.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-
-rich <- data.frame(Bioregion = names(all[, -c(1:5)]),
-                   Rich = colSums(all[, -c(1:5)]))
-rich <- left_join(regions, rich, by = "Bioregion")
-
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank()) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(rich$Rich)), log10(max(rich$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = rich, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(rich),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
-
+rm(list = ls())

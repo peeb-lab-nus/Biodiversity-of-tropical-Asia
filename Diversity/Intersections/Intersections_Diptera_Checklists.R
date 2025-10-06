@@ -4,7 +4,6 @@
 ### charliem2003@github
 ### 11/2024
 ###
-### Regions map used: Bioregions_checklists
 ### Taxonomy used:    Systema Dipterorum
 ### Checklist used:   Systema Dipterorum
 ###
@@ -23,29 +22,29 @@ rm(list = ls())
 ### Libraries
 library(dplyr)
 library(tidyr)
-library(ggplot2)
-library(sf)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "diptera") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")   # dir that contains the function scripts
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir   <- "Diversity"                                  # project dir
+dataDir   <- file.path("Diptera", "data", "directory")    # dir that contains the checklist data
 
-### Function for extracting region info from inside brackets
-source(file.path(funDir, "Intersections", "extractParantheses.R"))
+### You shouldn't need to adjust these folders
+resDir    <- file.path(projDir, "Intersections")          # dir to save results to
+funDir    <- file.path(projDir, "Analysis_functions")     # dir that contains the function scripts
+lookupDir <- file.path(resDir, "Look-up_tables")          # dir that contains look-up table for assigning bioregions
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
 #==================================================================================================#
+
+### Function for extracting region info from inside brackets
+source(file.path(funDir, "Intersections", "extractParantheses.R"))
 
 ### Read in and process data
 dip <- read.csv(file.path(dataDir, "Oriental-valid-spp_DIPTERA.csv")) %>%
   as_tibble() %>% 
   mutate(Species = gsub(" ", "_", Valid.Name.Short)) %>%
   filter(Species != "") %>%
-  rename(Genus = Valid_Genus_Check) %>%
+  dplyr::rename(Genus = Valid_Genus_Check) %>%
   select(Species, Genus, Family, Year, Range)
 
 ### Global data to get species numbers - 169,674 species
@@ -53,16 +52,16 @@ global <- readxl::read_xlsx(file.path(dataDir, "SD-world-valid-extant-species.xl
 length(unique(global$`Valid Name`))
 
 ### Spreadsheet with codes to assign to countries and provinces to bioregions
-bioregions <- read.csv(file.path(dataDir, "country_codes_BTAS_diptera.csv")) %>%
+bioregions <- read.csv(file.path(lookupDir, "country_codes_BTAS_diptera.csv")) %>%
   rename(Region = Description)
 
 ### Spreadsheet outlining bioregions when distribution information is 'X to Y'
-paths <- read.csv(file.path(dataDir, "country_paths_BTAS_diptera.csv")) %>%
+paths <- read.csv(file.path(lookupDir, "country_paths_BTAS_diptera.csv")) %>%
   select(Raw, Region, AsiaNative, Also_nontrop) %>%
   filter(!is.na(Region) | AsiaNative == 1) %>%
   separate_longer_delim(Region, delim = ", ") %>%
-  rename(Bioregion = Region) %>%
-  rename(Region = Raw) %>%
+  dplyr::rename(Bioregion = Region) %>%
+  dplyr::rename(Region = Raw) %>%
   mutate(Exclude = 0)
 
 ### Join together to get full list of names
@@ -245,33 +244,8 @@ colSums(dip_region[, bioregions])
 write.csv(dip_region, file.path(resDir, "Intersections", "Intersections_bioregions_diptera.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness and turnover
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-
-rich <- data.frame(Bioregion = names(dip_region[, -c(1:5)]),
-                   Rich = colSums(dip_region[, -c(1:5)]))
-rich <- left_join(regions, rich, by = "Bioregion")
-
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank()) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(rich$Rich)), log10(max(rich$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = rich, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(rich),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
+rm(list = ls())

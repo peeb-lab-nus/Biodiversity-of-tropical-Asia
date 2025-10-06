@@ -27,6 +27,7 @@ convertToPA <- function(rangeIntersects = intersections, # data frame of occupie
     st_drop_geometry() %>%
     select(all_of(regionNameCol))
   regs <- as.vector(regs[, 1])
+  regs <- gsub(" ", "_", regs)
   
   ausRegions <- c("Northern_Australia", "Northwest_Australian_Shelf", "Northeast_Australian_Shelf")
   regsNoAus <- regs[!regs %in% ausRegions]

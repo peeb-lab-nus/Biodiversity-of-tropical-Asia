@@ -4,11 +4,12 @@
 ### charliem2003@github
 ### 05/2024
 ###
-### Regions map used: Bioregions_checklists
-### Taxonomy used:    ?
-### Checklist used:   ?
+### Taxonomy used:  Ascher & Pickering 2025. Discover Life bee species guide and world checklist. Draft 58
+### Checklist used: Ascher & Pickering 2025. Discover Life bee species guide and world checklist. Draft 58
 ###
-### CITATION: ?
+### CITATION:
+### Ascher, J. S. & Pickering, J. 2025. Discover Life bee species guide and world checklist,
+###   (Hymenoptera: Apoidea: Anthophila). Draft 58. https://www.discoverlife.org/mp/20q?guide=Apoidea_species
 ### Orr, M. C., Hughes, A. C., Chesters, D., Pickering, J., Zhu, C.-D., & Ascher, J. S. (2021).
 ###   Global patterns and drivers of bee distribution. Current Biology, 31(3), 451-458.e4.
 ###   https://doi.org/10.1016/j.cub.2020.10.053
@@ -26,22 +27,22 @@ rm(list = ls())
 library(readr)
 library(dplyr)
 library(tidyr)
-library(ggplot2)
-library(sf)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "bees") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")   # dir that contains the function scripts
+### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
+projDir   <- "Diversity"                                  # project dir
+dataDir   <- file.path("Bee", "data", "directory")        # dir that contains the checklist data
 
-### Function for cleaning dates
-source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
+### You shouldn't need to adjust these folders
+resDir    <- file.path(projDir, "Intersections")          # dir to save results to
+funDir    <- file.path(projDir, "Analysis_functions")     # dir that contains the function scripts
+lookupDir <- file.path(resDir, "Look-up_tables")          # dir that contains look-up table for assigning bioregions
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
 #==================================================================================================#
+
+### Function for cleaning dates and extracting region info from inside brackets
+source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
 
 ### John's checklist data
 bees <- read_csv(file.path(dataDir, "Ascher bee data tropical Asia.csv"))
@@ -49,9 +50,6 @@ colnames(bees) <- gsub(" ", "_", colnames(bees))
 
 ### Provinces code
 codes <- read.csv(file.path(dataDir, "Ascher primary divisions states provinces islands codes_bioregions.csv"))
-
-### Regions data
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg"))
 
 #==================================================================================================#
 #------------------------------------ Determine intersections -------------------------------------#
@@ -166,9 +164,6 @@ intersections <- intersections %>%
               values_fn   = max) %>%
   mutate(Date = clean_publication_dates(Date, max = TRUE, first = FALSE)) %>%
   dplyr::rename(Year = Date) %>%
-  # mutate(AsiaNative = rowSums(select(., any_of(bioregions)))) %>%
-  # mutate(endemic = case_when(`NA` == 0 ~ 1,
-  #                            `NA` == 1 ~ 0)) %>%
   mutate(AsiaEndemic = case_match(AsiaEndemic,
                                   "Endemic species core area"            ~ 1,
                                   "Present core area"                    ~ 0,
@@ -182,35 +177,8 @@ c(native = nrow(intersections),
 write.csv(intersections, file.path(resDir, "Intersections", "Intersections_bioregions_bees.csv"),
           quote = FALSE, row.names = FALSE)
 
-####################################################################################################
-### plot richness and turnover
+#==================================================================================================#
+#----------------------------------------- Clean up memory ----------------------------------------#
+#==================================================================================================#
 
-rich <- data.frame(Bioregion = names(select(intersections, -Species, -Family, -Genus, -Year)),
-                   Rich      = as.vector(colSums(select(intersections, -Species, -Family, -Genus, -Year))))
-regions <- st_read(file.path(regionDir, "Bioregions_checklists.gpkg")) %>%
-  st_simplify(dTolerance = 1000)
-regions <- left_join(regions, rich, by = "Bioregion")
-
-library(ggplot2)
-ggplot() + 
-  theme(axis.ticks = element_blank(),
-        axis.text = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(colour = "black", fill = NA),
-        # legend.position = c(0.1, 0.02),
-        legend.position = "bottom",
-        legend.text = element_text(size = 5),
-        legend.title = element_text(size = 7),
-        legend.justification = c("left", "bottom"),
-        legend.key = element_blank(), legend.text.align = 0.5, legend.title.align = 0.5) +
-  scale_fill_viridis_c(option = "C", name = NULL, trans = "log10") +
-  guides(size = guide_legend(nrow = 2)) +
-  scale_radius(range = c(3, 8),
-               breaks = round(10 ^ seq(log10(min(regions$Rich)), log10(max(regions$Rich)), length.out = 5), 0),
-               name = "Species Richness",
-               trans = "log10") +
-  geom_sf(data = regions, aes(fill = Rich)) + 
-  geom_sf(data = st_centroid(regions),
-          col = "black", pch = 21, aes(size = Rich, fill = Rich))
-
-
+rm(list = ls())

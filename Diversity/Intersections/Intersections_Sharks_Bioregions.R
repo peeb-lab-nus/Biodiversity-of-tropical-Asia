@@ -32,7 +32,7 @@ library(units)
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
 projDir   <- "Diversity"                                            # project dir
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")            # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")          # dir that contains the taxonomy data (for description year)
+taxonDir  <- file.path("IUCN", "assessments", "directory")          # dir that contains the taxonomy data (from IUCN assessments)
 gadmDir   <- file.path("GADM", "directory")                         # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
@@ -67,27 +67,19 @@ regions <- st_read(file.path(regionDir, "MEOW_BTAS.gpkg"))
 ### global GADM for masking out dodgy coastlines in IUCN range maps on global range maps
 gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
 
-### range maps - 9,910 polygons, 9,430 species names
-rangemaps <- rbind(st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART1.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART2.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART3.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART4.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART5.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART6.shp")))
+### range maps - 1,297 polygons, 1,213 species names
+rangemaps <- rbind(st_read(file.path(rangeDir, "polygons", "SHARKS_RAYS_CHIMAERAS.shp")))
 
-### Species with point data - buffer by 25km (using equal-area projection) - 987 polygons, 34 species
-pts <- read.csv(file.path(rangeDir, "points", "MARINEFISH_points.csv")) %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
+### Species with point data - buffer by 25km (using equal-area projection) - 1 polygons, 1 species
+pts <- read.csv(file.path(rangeDir, "points", "SHARKS_RAYS_CHIMAERAS_points.csv")) %>%
+  st_as_sf(coords = c("dec_long", "dec_lat")) %>%
   st_set_crs(st_crs(rangemaps)) %>%
   st_transform(st_crs(regions)) %>%
   st_buffer(dist = 25000) %>%
   st_transform(st_crs(rangemaps))
 
-### Merge all maps together - 10,897 polygons, 9,431 species
+### Merge all maps together - 1,298 polygons, 1,214 species
 rangemaps <- bind_rows(rangemaps, pts)
-
-### Separate out the bony fish (Actinopterygii) - 1,252 polygons, 1,180 species
-rangemaps <- filter(rangemaps, class == "CHONDRICHTHYES")
 
 ### Include only marine species - 1,252 polygons, 1,180 species
 rangemaps <- filter(rangemaps, marine == "true" | is.na(marine))
@@ -132,7 +124,7 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,  # species range 
                                  spList           = spList,     # species list to subset rangemaps with
                                  spDir            = spDir,      # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,      # overwrite existing species intersections, otherwise skips
-                                 threads          = 5)          # no cores for parallelisation
+                                 threads          = 12)         # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#
@@ -148,6 +140,7 @@ for(i in 1:length(spList)) {
 
 ### pivot results data frame so each regional polygon is a column
 intersections <- intersections %>%
+  mutate(Region = gsub(" ", "_", Region)) %>%
   pivot_wider(names_from  = Region,
               values_from = Intersect_area,
               values_fn   = sum,
