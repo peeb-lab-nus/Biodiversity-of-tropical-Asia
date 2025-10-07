@@ -1,0 +1,97 @@
+Locality,Freq,Bioregion,AsiaNative
+Andaman Islands,1,Andamans,1
+Nicobar Islands,1,Andamans,1
+Borneo,145,Borneo,1
+Brunei,1,Borneo,1
+Kalimantan,79,Borneo,1
+Lombok,19,Borneo,1
+Sabah,17,Borneo,1
+Sarawak,70,Borneo,1
+Assam,8,Indian_Subcontinent,1
+Bangladesh,3,Indian_Subcontinent,1
+Bengal,2,Indian_Subcontinent,1
+Bhutan,16,Indian_Subcontinent,1
+Ceylon,6,Indian_Subcontinent,1
+Darjiling,16,Indian_Subcontinent,1
+Himalaya,1,Indian_Subcontinent,1
+India,323,Indian_Subcontinent,1
+Madras,15,Indian_Subcontinent,1
+Maharashtra,2,Indian_Subcontinent,1
+Nepal,158,Indian_Subcontinent,1
+Punjab,2,Indian_Subcontinent,1
+Sikkim,6,Indian_Subcontinent,1
+Sri Lanka,142,Indian_Subcontinent,1
+West Bengal,1,Indian_Subcontinent,1
+Burma,2,IndoChina,1
+Cambodia,11,IndoChina,1
+Formosa,1,IndoChina,1
+Guangdong,7,IndoChina,1
+Guangxi,54,IndoChina,1
+Hainan,6,IndoChina,1
+Hong Kong,6,IndoChina,1
+Laos,66,IndoChina,1
+Maldives,2,IndoChina,1
+Mergui,1,IndoChina,1
+Myanmar,136,IndoChina,1
+Okinawa,2,IndoChina,1
+Ryukyu Islands,10,IndoChina,1
+Taiwan,85,IndoChina,1
+Thailand,263,IndoChina,1
+Vietnam,355,IndoChina,1
+Yunnan,78,IndoChina,1
+Yunnan Province,17,IndoChina,1
+Bali,10,Java,1
+Jakarta,2,Java,1
+Java,252,Java,1
+Lesser Sunda Is.,12,Lesser_Sundas,1
+Lesser Sunda Islands,5,Lesser_Sundas,1
+Sumbawa,3,Lesser_Sundas,1
+Sumbawa island,1,Lesser_Sundas,1
+Timor Island,2,Lesser_Sundas,1
+Malacca,2,Malaya,1
+Malay Peninsula,1,Malaya,1
+Peninsular Malaysia,83,Malaya,1
+Singapore,48,Malaya,1
+Ambon,1,Maluku,1
+Aru,13,Maluku,1
+Aru Islands,1,Maluku,1
+Ceram,5,Maluku,1
+Halmahera,16,Maluku,1
+Mollucas,6,Maluku,1
+Moluccas,79,Maluku,1
+China,125,NA,NA
+Japan,306,NA,NA
+Bismarck Archipelago,13,New_Guinea,1
+Duke of York Island,1,New_Guinea,1
+Irian Jaya,7,New_Guinea,1
+Morobe,1,New_Guinea,1
+New Britain,7,New_Guinea,1
+New Guinea,119,New_Guinea,1
+New Ireland Province,2,New_Guinea,1
+Papua New Guinea,105,New_Guinea,1
+Raja Ampat,1,New_Guinea,1
+West Papua,47,New_Guinea,1
+Palawan,7,Palawan,1
+Philippines,99,Palawan,1
+Philippines,99,Philippines,1
+Bohol,3,Philippines,1
+Leyte,6,Philippines,1
+Luzon,9,Philippines,1
+Mindanao,7,Philippines,1
+Mindoro Island,1,Philippines,1
+Negros,1,Philippines,1
+Philippines,99,Philippines,1
+Samar Island,3,Philippines,1
+Sulawesi,192,Sulawesi,1
+Mentawai Islands,6,Sumatra,1
+Sumatra,220,Sumatra,1
+Asia,1,NA,NA
+Asia-Tropical,1,Unknown,1
+China Southeast,1,IndoChina,1
+East Asia,3,NA,NA
+East Indies,1,Unknown,1
+Northern Provinces,49,NA,NA
+South Asia,1,Unknown,1
+South East Asia,1,Unknown,1
+Sunda Sea,1,Unknown,1
+Sunda Shelf,1,Unknown,1

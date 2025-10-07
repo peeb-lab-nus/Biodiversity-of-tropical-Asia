@@ -1,0 +1,359 @@
+country,Bioregion,IncludesNonAsia,AsiaNative
+anadaman islands,Andamans,0,1
+india andaman islands,Andamans,0,1
+india andaman lslands,Andamans,0,1
+india great nicobar island,Andamans,0,1
+india nicobar,Andamans,0,1
+india nicobar islands,Andamans,0,1
+india north andaman island,Andamans,0,1
+india south andaman island,Andamans,0,1
+nicobar islands,Andamans,0,1
+thailand andaman and nicobar,Andamans,0,1
+thailand nicobar islands,Andamans,0,1
+bboorrnneeoo,Borneo,0,1
+borneo,Borneo,0,1
+borneo borneo,Borneo,0,1
+borneo telang,Borneo,0,1
+brunei,Borneo,0,1
+brunei borneo,Borneo,0,1
+indonesia,Borneo,0,1
+indonesia borneo,Borneo,0,1
+indonesia kalimantan,Borneo,0,1
+indonesia kalimantan,Borneo,0,1
+indonesia sabah,Borneo,0,1
+malaysia,Borneo,0,1
+malaysia banggi island,Borneo,0,1
+malaysia borneo,Borneo,0,1
+malaysia chiang mai,Borneo,0,1
+malaysia o borneo,Borneo,0,1
+malaysia sabah,Borneo,0,1
+malaysia sabah],Borneo,0,1
+malaysia sarawak,Borneo,0,1
+malaysia sarawak],Borneo,0,1
+"philippines,borneo",Borneo,0,1
+sabah,Borneo,0,1
+thailand borneo,Borneo,0,1
+thailand borneo lombok,Borneo,0,1
+assam,Indian_Subcontinent,0,1
+bangladesh,Indian_Subcontinent,0,1
+bhutan,Indian_Subcontinent,0,1
+bihar,Indian_Subcontinent,0,1
+himachal pradesh,Indian_Subcontinent,0,1
+india,Indian_Subcontinent,0,1
+india  rajasthan,Indian_Subcontinent,0,1
+india andhra pradesh,Indian_Subcontinent,0,1
+india arunachal pradesh,Indian_Subcontinent,0,1
+india assam,Indian_Subcontinent,0,1
+india bali,Indian_Subcontinent,0,1
+india bihar,Indian_Subcontinent,0,1
+india bombay,Indian_Subcontinent,0,1
+india central,Indian_Subcontinent,0,1
+india darjeeling,Indian_Subcontinent,0,1
+india himachal pradesh,Indian_Subcontinent,0,1
+india kameng,Indian_Subcontinent,0,1
+india karnataka,Indian_Subcontinent,0,1
+india kashmir,Indian_Subcontinent,0,1
+india kerala,Indian_Subcontinent,0,1
+india madhya pradesh,Indian_Subcontinent,0,1
+india maharashtra,Indian_Subcontinent,0,1
+india meghalaya,Indian_Subcontinent,0,1
+india mus,Indian_Subcontinent,0,1
+india mysore,Indian_Subcontinent,0,1
+india north korea north korea,Indian_Subcontinent,0,1
+india oriental,Indian_Subcontinent,0,1
+india orissa,Indian_Subcontinent,0,1
+india punjab,Indian_Subcontinent,0,1
+india rajastan,Indian_Subcontinent,0,1
+india rajasthan,Indian_Subcontinent,0,1
+india rajshahi,Indian_Subcontinent,0,1
+india romblon,Indian_Subcontinent,0,1
+india sikkim,Indian_Subcontinent,0,1
+india sikkim uttarakhand,Indian_Subcontinent,0,1
+india sri lanka,Indian_Subcontinent,0,1
+india tamil nadu,Indian_Subcontinent,0,1
+india teri garhwal,Indian_Subcontinent,0,1
+india uttar pradesh,Indian_Subcontinent,0,1
+india uttar-pradesh,Indian_Subcontinent,0,1
+india uttarakhand,Indian_Subcontinent,0,1
+india west bengal,Indian_Subcontinent,0,1
+india zhejiang,Indian_Subcontinent,1,1
+"india,india assam",Indian_Subcontinent,0,1
+kerala,Indian_Subcontinent,0,1
+madhya pradesh,Indian_Subcontinent,0,1
+meghalaya,Indian_Subcontinent,0,1
+nepal,Indian_Subcontinent,0,1
+nepal andhra pradesh,Indian_Subcontinent,0,1
+nepal himachal pradesh,Indian_Subcontinent,0,1
+nepal rajasthan,Indian_Subcontinent,0,1
+nepal west bengal,Indian_Subcontinent,0,1
+npeal,Indian_Subcontinent,0,1
+rajshahi,Indian_Subcontinent,0,1
+russia sri lanka,Indian_Subcontinent,1,1
+sikkim,Indian_Subcontinent,0,1
+sri lanka,Indian_Subcontinent,0,1
+sri lanka sri lanka,Indian_Subcontinent,0,1
+srik lanka,Indian_Subcontinent,0,1
+uttar pradesh,Indian_Subcontinent,0,1
+west bengal,Indian_Subcontinent,0,1
+australia chiang mai,IndoChina,1,1
+cambodia,IndoChina,0,1
+cambodia chiang mai,IndoChina,0,1
+chiang mai,IndoChina,0,1
+china  guangxi,IndoChina,0,1
+china  hong kong,IndoChina,0,1
+china  yunnan ,IndoChina,0,1
+china guang-xi,IndoChina,0,1
+china guangdong,IndoChina,0,1
+china guangxi,IndoChina,0,1
+"china guangxi,",IndoChina,0,1
+china hainan,IndoChina,0,1
+china hainan island,IndoChina,0,1
+china hong kong,IndoChina,0,1
+china li-kiang yunnan,IndoChina,0,1
+china taiwan,IndoChina,0,1
+china yunnan,IndoChina,0,1
+china yunnan.,IndoChina,0,1
+"china,vietnam",IndoChina,0,1
+"guang-xi,nan",IndoChina,0,1
+guangdong,IndoChina,0,1
+guangxi,IndoChina,0,1
+guinea,New_Guinea,0,1
+"hokkaido,okinawa",IndoChina,1,1
+hong kong,IndoChina,0,1
+japan guangdong,IndoChina,1,1
+japan guangxi,IndoChina,1,1
+japan hong kong,IndoChina,1,1
+japan okinawa,IndoChina,1,1
+japan okinawa hokkaido,IndoChina,1,1
+japan yunnan,IndoChina,1,1
+laos,IndoChina,0,1
+laos budapest,IndoChina,1,1
+laos far east,IndoChina,1,1
+laos people's democratic republic according to j olah,IndoChina,0,1
+malaysia chiang mai,IndoChina,0,1
+myanmar,IndoChina,0,1
+myanmar chiang mai,IndoChina,0,1
+myanmar oriental,IndoChina,0,1
+myanmar sichuan,IndoChina,1,1
+myanmar yunnan,IndoChina,0,1
+"myanmar,",IndoChina,0,1
+mynamar,IndoChina,0,1
+nepal chiang mai,IndoChina,0,1
+nepal guangdong,IndoChina,0,1
+nepal guangxi,IndoChina,0,1
+nepal yunnan,IndoChina,0,1
+okinawa,IndoChina,0,1
+taiwan,IndoChina,0,1
+"taiwan,china",IndoChina,1,1
+"taiwan,japan",IndoChina,1,1
+thaialnd,IndoChina,0,1
+thailand,IndoChina,0,1
+thailand  krabi,IndoChina,0,1
+thailand andaman and nicobar,IndoChina,0,1
+thailand bali,IndoChina,0,1
+thailand borneo,IndoChina,0,1
+thailand borneo lombok,IndoChina,0,1
+thailand central,IndoChina,0,1
+thailand chang island,IndoChina,0,1
+thailand chiang mai,IndoChina,0,1
+thailand far east,IndoChina,0,1
+thailand gulf,IndoChina,0,1
+thailand johor,IndoChina,0,1
+thailand kanchanaburi,IndoChina,0,1
+thailand kood island,IndoChina,0,1
+thailand krabi,IndoChina,0,1
+thailand lanta,IndoChina,0,1
+thailand lanta island,IndoChina,0,1
+thailand lanta islands,IndoChina,0,1
+thailand lombok,IndoChina,0,1
+thailand nicobar islands,IndoChina,0,1
+thailand oriental,IndoChina,0,1
+thailand pahang,IndoChina,0,1
+thailand perak,IndoChina,0,1
+thailand pha ngan,IndoChina,0,1
+thailand pha ngan island,IndoChina,0,1
+thailand pha ngan islands,IndoChina,0,1
+thailand phayam island,IndoChina,0,1
+thailand phuket,IndoChina,0,1
+thailand phuket island,IndoChina,0,1
+thailand samui,IndoChina,0,1
+thailand samui island,IndoChina,0,1
+thailand surat thani,IndoChina,0,1
+vieetnam,IndoChina,0,1
+vientam,IndoChina,0,1
+vientnam,IndoChina,0,1
+vietnam,IndoChina,0,1
+vietnam anhui,IndoChina,0,1
+vietnam budapest,IndoChina,1,1
+vietnam chang island,IndoChina,0,1
+vietnam chiang mai,IndoChina,0,1
+vietnam far east,IndoChina,0,1
+vietnam fujian,IndoChina,1,1
+vietnam guangdong,IndoChina,1,1
+vietnam guangxi,IndoChina,0,1
+vietnam guizhou,IndoChina,1,1
+vietnam gulf,IndoChina,0,1
+vietnam hainan,IndoChina,0,1
+vietnam henan,IndoChina,1,1
+vietnam hunan,IndoChina,1,1
+vietnam jiangxi,IndoChina,1,1
+vietnam north korea,IndoChina,1,1
+vietnam oriental,IndoChina,0,1
+vietnam shaanxi,IndoChina,1,1
+vietnam sichuan,IndoChina,1,1
+vietnam yunnan,IndoChina,0,1
+vietnam zhejiang,IndoChina,1,1
+vietnamlaos,IndoChina,0,1
+vietnamlaos chiang mai,IndoChina,0,1
+vitenam,IndoChina,0,1
+yunnan,IndoChina,0,1
+yunnan guizhou,IndoChina,1,1
+yunnan hubei,IndoChina,1,1
+yunnan jiangxi,IndoChina,1,1
+yunnan yunnan,IndoChina,0,1
+bali,Java,0,1
+india bali,Java,0,1
+indonesia,Java,0,1
+indonesia bali,Java,0,1
+indonesia east java,Java,0,1
+indonesia java,Java,0,1
+indonesia java timor,Java,0,1
+java,Java,0,1
+java bali,Java,0,1
+java java,Java,0,1
+malaysia java,Java,0,1
+philippines bali,Java,0,1
+thailand bali,Java,0,1
+indonesia,Lesser_Sundas,0,1
+indonesia lombok,Lesser_Sundas,0,1
+indonesia sumba,Lesser_Sundas,0,1
+lombok,Lesser_Sundas,0,1
+malaysia lombok,Lesser_Sundas,0,1
+thailand borneo lombok,Lesser_Sundas,0,1
+thailand lombok,Lesser_Sundas,0,1
+johor,Malaya,0,1
+malaysia,Malaya,0,1
+malaysia chiang mai,Malaya,0,1
+malaysia johor,Malaya,0,1
+malaysia langkawi,Malaya,0,1
+malaysia pahang,Malaya,0,1
+malaysia pahnang state,Malaya,0,1
+malaysia peninsular,Malaya,0,1
+malaysia pensinular,Malaya,0,1
+malaysia perak,Malaya,0,1
+malaysia selangor,Malaya,0,1
+indonesia,Maluku,0,1
+indonesia ambon,Maluku,0,1
+indonesia bacan,Maluku,0,1
+indonesia formerly gilolo island,Maluku,0,1
+indonesia halmahera,Maluku,0,1
+indonesia kepulauan tanimbar,Maluku,0,1
+indonesia maluku,Maluku,0,1
+indonesia malukupapua,Maluku,0,1
+indonesia misool island,Maluku,0,1
+indonesia sula,Maluku,0,1
+kei island,Maluku,0,1
+borneo ?,NA,NA,NA
+china,NA,NA,NA
+china guangdong xxx???,NA,NA,NA
+china oriental,NA,NA,NA
+china south,NA,NA,NA
+china southern,NA,NA,NA
+equatorial,NA,NA,NA
+guinea bougainville,NA,NA,NA
+guinea bougainville island,NA,NA,NA
+indonesia sumatra or irian jaya,NA,NA,NA
+japan,NA,NA,NA
+malaysia xx?,NA,NA,NA
+nepal & pc barnard,NA,NA,NA
+nepal guizhou,NA,NA,NA
+nepal gulf,NA,NA,NA
+nepal ka johanson,NA,NA,NA
+nepal oriental,NA,NA,NA
+nepal shaanxi,NA,NA,NA
+nepal uttarakhand,NA,NA,NA
+"nepal zhejiang,sichuan",NA,NA,NA
+nepal zootaxa 1738: 86,NA,NA,NA
+oriental,NA,NA,NA
+oriental region,NA,NA,NA
+tamil,NA,NA,NA
+archipelago papua new,New_Guinea,0,1
+germany papua new,New_Guinea,1,1
+guinea  bismarck archipelago,New_Guinea,0,1
+guinea  st matthias islands,New_Guinea,0,1
+guinea archipelago,New_Guinea,0,1
+guinea bismarck archipelago,New_Guinea,0,1
+guinea bismark archipelago,New_Guinea,0,1
+guinea manus,New_Guinea,0,1
+guinea new britain,New_Guinea,0,1
+indonesia,New_Guinea,0,1
+indonesia biak,New_Guinea,0,1
+indonesia irian jaya,New_Guinea,0,1
+indonesia malukupapua,New_Guinea,0,1
+indonesia papua,New_Guinea,0,1
+indonesia papua barat,New_Guinea,0,1
+indonesia waigeo island,New_Guinea,0,1
+indonesia west papua,New_Guinea,0,1
+"indonesia,papua barat",New_Guinea,0,1
+indonesian new,New_Guinea,0,1
+indonesian papua new,New_Guinea,0,1
+louisiade archipelago,New_Guinea,0,1
+misool island,New_Guinea,0,1
+new britain,New_Guinea,0,1
+papaua new,New_Guinea,0,1
+papua,New_Guinea,0,1
+papua irian jaya,New_Guinea,0,1
+papua mussau,New_Guinea,0,1
+papua mussau island,New_Guinea,0,1
+papua new,New_Guinea,0,1
+philippines papua new,New_Guinea,0,1
+rossel island,New_Guinea,0,1
+palawan,Palawan,0,1
+philipines,Palawan,0,1
+philippines,Palawan,0,1
+philippines bali,Palawan,0,1
+philippines palawan,Palawan,0,1
+philippines papua new,Palawan,0,1
+"philippines,borneo",Palawan,0,1
+luzon,Philippines,0,1
+philipines,Philippines,0,1
+philipines luzon,Philippines,0,1
+philipines mindanao,Philippines,0,1
+philippines,Philippines,0,1
+philippines bali,Philippines,0,1
+philippines basilan,Philippines,0,1
+philippines leyte,Philippines,0,1
+philippines luzon,Philippines,0,1
+philippines mindanao,Philippines,0,1
+philippines mindanao or luzon,Philippines,0,1
+philippines mindinao,Philippines,0,1
+philippines mindoro,Philippines,0,1
+philippines negros,Philippines,0,1
+philippines north luzon,Philippines,0,1
+philippines panay,Philippines,0,1
+philippines papua new,Philippines,0,1
+philippines sibuyan,Philippines,0,1
+philippines sulu,Philippines,0,1
+philippines tawi tawi,Philippines,0,1
+philippines visayas,Philippines,0,1
+"philippines,borneo",Philippines,0,1
+phillipines luzon,Philippines,0,1
+sulu,Philippines,0,1
+australia indonesia sulawesi,Sulawesi,1,1
+indonesia,Sulawesi,0,1
+indonesia central sulawesi,Sulawesi,0,1
+indonesia south sulawesi,Sulawesi,0,1
+indonesia sulawesi,Sulawesi,0,1
+indonesia sulawesi selatan,Sulawesi,0,1
+indonesia sulawesi utara,Sulawesi,0,1
+indonesia talaud,Sulawesi,0,1
+indonesia talaud island,Sulawesi,0,1
+sulawesi,Sulawesi,0,1
+sulawesi utara,Sulawesi,0,1
+indeonesia sumatra,Sumatra,0,1
+indonesia,Sumatra,0,1
+indonesia nias,Sumatra,0,1
+indonesia nias island,Sumatra,0,1
+indonesia seram,Sumatra,0,1
+indonesia south nias,Sumatra,0,1
+indonesia sumatra,Sumatra,0,1

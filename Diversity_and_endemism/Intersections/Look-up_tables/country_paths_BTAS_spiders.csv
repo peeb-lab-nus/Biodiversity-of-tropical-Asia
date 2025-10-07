@@ -1,0 +1,133 @@
+Raw,Start,End,Start_region,End_region,Region,AsiaNative
+Africa to China and India,-,"China, India",-,Indian_Subcontinent,Indian_Subcontinent,1
+Africa to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Angola to China,-,China,-,-,NA,NA
+Armenia to China,-,China,-,-,NA,NA
+Austria to China,-,China,-,-,NA,NA
+Bangladesh to Japan,Bangladesh,Japan,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina",1
+Bangladesh to Malaysia,Bangladesh,Malaysia,Indian_Subcontinent,Malaya; Borneo,"Indian_Subcontinent, IndoChina, Malaya, Borneo",1
+Bangladesh to Philippines,Bangladesh,Philippines,Indian_Subcontinent,Philippines; Palawan,"Indian_Subcontinent, IndoChina, Philippines, Palawan",1
+Bhutan to Vietnam,Bhutan,Vietnam,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+Borneo to Australia,Borneo,Australia,Borneo,-,"Borneo, Sulawesi, Maluku, New_Guinea",1
+Botswana to China,-,China,-,-,NA,NA
+Bulgaria to China,-,China,-,-,NA,NA
+Caucasus to Central Asia and China,-,China,-,-,NA,NA
+Central Asia to China,-,China,-,-,NA,NA
+China to Australia,China,Australia,-,-,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+China to Australia Queensland,China,Australia,-,-,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+China to Indonesia,China,Indonesia,-,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+China to Indonesia Java,China,Java,-,Java,"IndoChina, Malaya, Sumatra, Java",1
+China to Indonesia Moluccas,China,Moluccas,-,Maluku,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku",1
+China to Indonesia Sulawesi,China,Sulawesi,-,Sulawesi,"IndoChina, Malaya, Borneo, Sulawesi",1
+China to Indonesia Sumatra,China,Sumatra,-,Sumatra,"IndoChina, Malaya, Sumatra",1
+China to Malaysia,China,Malaysia,-,Malaya; Borneo,"IndoChina, Malaya, Borneo",1
+China to Philippines,China,Philippines,-,Philippines; Palawan,"IndoChina, Philippines, Palawan",1
+Eastern Africa to India and Indonesia,-,Indonesia,-,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+France to Japan,-,Japan,-,-,NA,NA
+Greece to China,-,China,-,-,NA,NA
+India and China to Indonesia,India,Indonesia,Indian_Subcontinent,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India Nicobar Is to Japan,Nicobar Is.,Japan,Andamans,-,"Andamans, IndoChina",1
+India to Australia,India,-,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India to Bangladesh and Vietnam,India,Vietnam,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+India to China,India,China,Indian_Subcontinent,-,Indian_Subcontinent,1
+India to China and Indonesia,India,Indonesia,Indian_Subcontinent,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India to China and Japan,India,Japan,Indian_Subcontinent,-,Indian_Subcontinent,1
+India to China and Philippines,India,Philippines,Indian_Subcontinent,Philippines; Palawan,"Indian_Subcontinent, IndoChina, Philippines, Palawan",1
+India to Indonesia Java,India,Java,Indian_Subcontinent,Java,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java",1
+India to Indonesia Sulawesi and Japan,India,Sulawesi,Indian_Subcontinent,Sulawesi,"Indian_Subcontinent, IndoChina, Malaya, Borneo, Sulawesi, Philippines, Palawan",1
+India to Indonesia Sumatra,India,Sumatra,Indian_Subcontinent,Sumatra,"Indian_Subcontinent, IndoChina, Malaya, Sumatra",1
+India to Japan,India,Japan,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina",1
+India to Malaysia,India,Malayasia,Indian_Subcontinent,Malaya; Borneo,"Indian_Subcontinent, IndoChina, Malaya, Borneo",1
+India to Myanmar,India,Myanmar,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+India to New Caledonia,India,-,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India to Papua New Guinea,India,-,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India to Philippines,India,Philippines,Indian_Subcontinent,Philippines; Palawan,"Indian_Subcontinent, IndoChina, Philippines, Palawan",1
+India to Polynesia,India,-,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+India to Singapore,India,Singapore,Indian_Subcontinent,Malaya,"Indian_Subcontinent, IndoChina, Malaya",1
+India to Taiwan,India,Taiwan,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+India to Vietnam,India,Vietnam,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+India to Vietnam and Indonesia Sulawesi,India,Sulawesi,Indian_Subcontinent,Sulawesi,"Indian_Subcontinent, IndoChina, Malaya, Borneo, Sulawesi",1
+Indonesia Java to New Guinea,Java,New_Guinea,Java,New_Guinea,"Java, Lesser_Sundas, Maluku, New_Guinea",1
+Indonesia Moluccas to Australia,Maluku,Australia,Maluku,-,"Maluku, New_Guinea",1
+Indonesia Moluccas to Australia Queensland,Maluku,Australia,Maluku,-,"Maluku, New_Guinea",1
+Indonesia Moluccas to New Guinea,Maluku,New_Guinea,Maluku,New_Guinea,"Maluku, New_Guinea",1
+Indonesia Sulawesi to Australia,Sulawesi,Australia,Sulawesi,-,"Sulawesi, Maluku, New_Guinea",1
+Indonesia Sulawesi to Australia Queensland,Sulawesi,Australia,Sulawesi,-,"Sulawesi, Maluku, New_Guinea",1
+Indonesia Sumatra to Australia,Sumatra,Australia,Sumatra,-,"Sumatra, Java, Lesser_Sundas",1
+Indonesia Sumatra to New Guinea,Sumatra,New_Guinea,Sumatra,New_Guinea,"Sumatra, Java, Lesser_Sundas, Maluku, New_Guinea",1
+Indonesia Sumatra to Philippines,Sumatra,Philippines,Sumatra,Philippines; Palawan,"Sumatra, Malaya, Borneo, Philippines, Palawan",1
+Indonesia Sunda Is to Australia,Sunda Is.,Australia,Lesser_Sundas,-,Lesser_Sundas,1
+Indonesia to Australia,Indonesia,Australia,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,-,"Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Indonesia to China,Indonesia,China,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,-,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Israel to Bhutan,-,Bhutan,-,Indian_Subcontinent,Indian_Subcontinent,1
+Israel to China,-,China,-,-,NA,NA
+Italy to China,-,China,-,-,NA,NA
+Japan Ryukyu Is to Australia,Ryukyu Is.,Australia,IndoChina,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Japan to Australia,Japan,Australia,-,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Japan to Micronesia,Japan,-,-,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Kazakhstan to China,-,China,-,-,NA,NA
+Kazakhstan to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Laos to China,Laos,China,IndoChina,-,IndoChina,1
+Libya to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Madagascar to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Malaysia to Australia,Malaysia,Australia,Malaya; Borneo,-,"Malaya, Borneo, Sumatra, Java, Lesser_Sundas",1
+Malaysia to Australia Northern Territory,Malaysia,Australia,Malaya; Borneo,Northern_Australia,"Malaya, Borneo, Sumatra, Java, Lesser_Sundas",1
+Malaysia to Indonesia,Malaysia,Indonesia,Malaya; Borneo,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea,"Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Malaysia to Indonesia Java,Malaysia,Java,Malaya; Borneo,Java,"Malaya, Borneo, Sumatra, Java",1
+Malaysia to Indonesia Lombok,Malaysia,Lesser_Sundas,Malaya; Borneo,Lesser_Sundas,"Malaya, Borneo, Sumatra, Java, Lesser_Sundas",1
+Malaysia to Indonesia Sulawesi,Malaysia,Sulawesi,Malaya; Borneo,Sulawesi,"Malaya, Borneo, Sulawesi",1
+Malaysia to New Guinea,Malaysia,New_Guinea,Malaya; Borneo,New_Guinea,"Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Mediterranean to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Mediterranean to Japan,-,Japan,-,-,NA,NA
+Middle East to Central Asia and China,-,China,-,-,NA,NA
+Middle East to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Myanmar and Philippines to New Guinea,Myanmar,New_Guinea,IndoChina,New_Guinea,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea, Philippines, Palawan",1
+Myanmar China to Philippines and Indonesia  Sulawesi,Myanmar,Sulawesi,IndoChina,Sulawesi,"IndoChina, Malaya, Borneo, Sulawesi, Philippines, Palawan",1
+Myanmar to Australia Queensland,Myanmar,Australia,IndoChina,-,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Myanmar to Indonesia,Myanmar,Indonesia,IndoChina,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Myanmar to Indonesia Java,Myanmar,Java,IndoChina,Java,"IndoChina, Malaya, Sumatra, Java",1
+Myanmar to Indonesia Sulawesi,Myanmar,Sulawesi,IndoChina,Sulawesi,"IndoChina, Malaya, Borneo, Sulawesi",1
+Myanmar to Indonesia Sumatra,Myanmar,Sumatra,IndoChina,Sumatra,"IndoChina, Malaya, Sumatra, Java",1
+Myanmar to Japan,Myanmar,Japan,IndoChina,-,IndoChina,1
+Myanmar to New Caledonia,Myanmar,-,IndoChina,-,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Myanmar to New Guinea,Myanmar,New_Guinea,IndoChina,New_Guinea,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Myanmar to Papua New Guinea,Myanmar,New_Guinea,IndoChina,New_Guinea,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Myanmar to Philippines,Myanmar,Philippines,IndoChina,Philippines; Palawan,"IndoChina, Philippines, Palawan",1
+Nepal to Japan,Nepal,Japan,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina",1
+New Guinea to Australia New South Wales,New_Guinea,Australia,New_Guinea,-,New_Guinea,1
+New Guinea to Fiji,New_Guinea,-,New_Guinea,-,New_Guinea,1
+New Guinea to Solomon Is,New_Guinea,-,New_Guinea,-,New_Guinea,1
+Pakistan to Australia Northern Territory,-,Australia,-,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Pakistan to Indonesia,-,Indonesia,-,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea ,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Pakistan to Indonesia Borneo and Australia,-,Australia,-,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Pakistan to Japan and New Guinea,-,New_Guinea,-,New_Guinea,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Pakistan to Philippines,-,Philippines,-,Philippines; Palawan,"Indian_Subcontinent, IndoChina, Philippines, Palawan",1
+Philippines to Australia,Philippines,Australia,Philippines; Palawan,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Philippines to Australia Queensland,Philippines,Australia,Philippines; Palawan,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Russia Caucasus to China,-,China,-,-,NA,NA
+Russia Europe to China,-,China,-,-,NA,NA
+Ryukyu Is to Hawaii,Ryukyu Is.,-,IndoChina,-,NA,NA
+SE Asia to Australia Queensland,-,Australia,IndoChina; Malaya; Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea; Philippines; Palawan,-,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea, Philippines, Palawan",1
+Senegal to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+South Africa to India,-,India,-,Indian_Subcontinent,Indian_Subcontinent,1
+Southeast Asia to Australia,-,Australia,IndoChina; Malaya; Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea; Philippines; Palawan,-,"IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea, Philippines, Palawan",1
+Southern Europe to Central Asia and China,-,China,-,-,NA,NA
+Sri Lanka to Australia Queensland,Sri Lanka,Australia,IndoChina,-,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Sri Lanka to China,Sri Lanka,China,Indian_Subcontinent,-,Indian_Subcontinent,1
+Sri Lanka to Indonesia,Sri Lanka,Indonesia,Indian_Subcontinent,Sumatra; Java; Borneo; Sulawesi; Lesser_Sundas; Maluku; New_Guinea,"Indian_Subcontinent, IndoChina, Malaya, Sumatra, Java, Borneo, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Sri Lanka to Indonesia Java,Sri Lanka,Java,IndoChina,Java,"IndoChina, Malaya, Sumatra, Java",1
+Sri Lanka to Japan,Sri Lanka,Japan,Indian_Subcontinent,-,"Indian_Subcontinent, IndoChina",1
+Sri Lanka to Malaysia,Sri Lanka,Malaysia,Indian_Subcontinent,Malaya; Borneo,"Indian_Subcontinent, IndoChina, Malaya, Borneo",1
+Sri Lanka to Philippines,Sri Lanka,Philippines,Indian_Subcontinent,Philippines; Palawan,"Indian_Subcontinent, IndoChina, Philippines, Palawan",1
+Sri Lanka to Taiwan,Sri Lanka,Taiwan,Indian_Subcontinent,IndoChina,"Indian_Subcontinent, IndoChina",1
+Taiwan to Australia,Taiwan,-,IndoChina,-,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+Taiwan to New Guinea,Taiwan,New_Guinea,IndoChina,New_Guinea,"Philippines, Palawan, Sulawesi, Maluku, New_Guinea",1
+temperate Asia to China,-,China,-,-,NA,1
+Thailand to Australia Queensland,Thailand,Australia,IndoChina,-,"IndoChina, Malaya, Borneo, Sumatra, Java, Sulawesi, Lesser_Sundas, Maluku, New_Guinea",1
+Thailand to Indonesia Lesser Sunda Is,Thailand,Lesser_Sundas,IndoChina,Lesser_Sundas,"IndoChina, Malaya, Sumatra, Java, Lesser_Sundas",1
+Thailand to Japan Ryukyu Is,Thailand,Ryukyu Is.,IndoChina,IndoChina,IndoChina,1
+Turkmenistan to China,-,China,-,-,NA,NA
+Ukraine to China,-,China,-,-,NA,NA
+Vietnam to Indonesia Java,Vietnam,Java,IndoChina,Java,"IndoChina, Malaya, Sumatra, Java",1
+Vietnam to Indonesia Sumatra,Vietnam,Sumatra,IndoChina,Sumatra,"IndoChina, Malaya, Sumatra",1
+West Africa to China,-,China,-,-,NA,NA
