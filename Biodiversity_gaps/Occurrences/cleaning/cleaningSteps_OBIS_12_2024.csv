@@ -1,0 +1,20 @@
+Flag,Issue,Params,Issue_flags_applied,Order,Function,Description
+No_coordinates,Spatial,,COORDINATE_INVALID; COORDINATE_OUT_OF_RANGE,1,incompleteCoords,Remove records without both lat and lon
+Record_type,Observation,,,2,recordType,Remove fossil records and living specimens (zoos and botanic gardens)
+Occurrence_status,Observation,,,3,occurrenceStatus,Remove records labelled as 'absent'
+No_species_name,Taxonomic,,TAXON_MATCH_NONE,4,taxonomicRank,Remove records where name is not resolved to species
+Zero_coordinates,Spatial,,ZERO_COORDINATE,5,zeroCoordinates,"Removes records where coordinates are 0,0"
+No_date,Temporal,,,6,noDate,Removes records with no eventDate
+Coordinate_accuracy,Spatial,Dist = 100,,7,coordUncertainty,Remove records where coordinate uncertainty is above a threshold (in km)
+Spatiotemporal_duplicates,Duplicate_data,tempRes = day,,8,spatioTempDuplicates,"Removes records (retains first record) with exact same coordinates and date to specified resolution (‘day’, ‘month’ or ‘year’) for a given species"
+Points_outside_region,Spatial,shpFile = Data/BTAS_grid_100km.gpkg,,9,outsideRegion,Remove records outside bounding box of shapefile
+Points_at_country_centroids,Spatial,Dist = 0.5; centroids_detail = country,,10,ptsCentroids,Remove records where distance to country centroids is less than threshold (in km)
+Points_near_institutions,Spatial,Dist = 0.5,,11,ptsInstitutions,Remove records where distance to institution is less than threshold (in km)
+Non-land,Spatial,inverse = TRUE; shpFile = Data/GADM_410_BTAS_land.gpkg,,12,maskToLand,Removes records that fall outside of GADM land areas (or optionally invert for marine points)
+Uncertain_coordinates,Spatial,,GEODETIC_DATUM_INVALID; COORDINATE_REPROJECTION_SUSPICIOUS; COORDINATE_REPROJECTION_FAILED; PRESUMED_NEGATED_LATITUDE; PRESUMED_NEGATED_LONGITUDE; PRESUMED_SWAPPED_COORDINATE ,NA,uncertainCoords,"Suspicious, swapped or guessed coordiantes"
+Uncertain_name,Taxonomic,,TAXON_MATCH_HIGHERRANK; TAXON_MATCH_FUZZY; TAXON_MATCH_NAME_AND_ID_AMBIGUOUS,NA,uncertainName,Remove records where name is uncertain
+Uncertain_date,Temporal,,RECORDED_DATE_INVALID; RECORDED_DATE_MISMATCH; RECORDED_DATE_UNLIKELY,NA,uncertainDate,Possible date issues or date unlikely
+Record_age,Temporal,Year = 1980,,NA,recordAge,Filter out records before a certain year
+Points_at_GBIF_headquarters,Spatial,Dist = 0.5,,NA,ptsGBIF,Remove records where distance to GBIF headquarters is less than threshold (in km)
+Spatial_duplicates,Duplicate_data,,,NA,spatialDuplicates,Removes records with exact same coordinates for a given species but date is ignored (retains first record) 
+Name_status,Taxonomic,,,NA,taxonomicStatus,Removes records where name is invalid
