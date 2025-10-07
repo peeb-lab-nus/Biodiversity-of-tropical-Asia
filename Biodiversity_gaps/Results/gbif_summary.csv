@@ -1,0 +1,25 @@
+group,taxon,name,nPts_dataset,nPts_global
+Vascular plants,Ferns,ferns,3043244961,15290218
+Vascular plants,Flowering plants,angiosperms,3043244961,447723919
+Vascular plants,Gymnosperms,gymnosperms,3043244961,7203564
+Vascular plants,Lycophytes,lycophytes,3043244961,1394390
+Terrestrial and freshwater vertebrates,Amphibians,amphibians,3043244961,11301396
+Terrestrial and freshwater vertebrates,Birds,birds,3043244961,2000742086
+Terrestrial and freshwater vertebrates,Freshwater fish,freshwater_fish,3043244961,68666102
+Terrestrial and freshwater vertebrates,Mammals,mammals,3043244961,41300421
+Terrestrial and freshwater vertebrates,Reptiles,reptiles,3043244961,11030903
+Terrestrial and freshwater invertebrates,Ants,ants,3043244961,3224599
+Terrestrial and freshwater invertebrates,Bees,bees,3043244961,11425881
+Terrestrial and freshwater invertebrates,Butterflies,butterflies,3043244961,46965049
+Terrestrial and freshwater invertebrates,Caddisflies,trichoptera,3043244961,3265682
+Terrestrial and freshwater invertebrates,Centipedes,chilopods,3043244961,232212
+Terrestrial and freshwater invertebrates,Flies,diptera,3043244961,24597964
+Terrestrial and freshwater invertebrates,Freshwater crabs,freshwater_crabs,3043244961,31695
+Terrestrial and freshwater invertebrates,Millipedes,diplopods,3043244961,443912
+Terrestrial and freshwater invertebrates,Mirid bugs,miridae,3043244961,1140414
+Terrestrial and freshwater invertebrates,Spiders,spiders,3043244961,6405520
+Terrestrial and freshwater invertebrates,Stick and leaf insects,phasmids,3043244961,71252
+Marine,Bony fish,bony_fish,128621187,37480780
+Marine,Reef corals,corals,128621187,979709
+Marine,Sharks and rays,sharks,128621187,3112342
+Marine,Sponges,sponges,128621187,988032

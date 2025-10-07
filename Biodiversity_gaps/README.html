@@ -369,11 +369,10 @@ the ‘Diversity_and_endemism’ folder</em></p>
 <div id="clean-occurrence-data-for-each-taxonomic-group" class="section level3">
 <h3>1. Clean occurrence data for each taxonomic group</h3>
 <p>Filters out the points for a each taxonomic group from the global
-GBIF and OBIS .parquet data dumps,<br />
-and applies the cleaning steps outlined in Table S4. Scripts for each
-taxonomic group are available in the folder ‘Occurrences/cleaning’. It
-will output the cleaned data to the folder
-‘Occurrences/cleaning/cleaned’.</p>
+GBIF and OBIS .parquet data dumps, and applies the cleaning steps
+outlined in Table S4. Scripts for each taxonomic group are available in
+the folder ‘Occurrences/cleaning’. It will output the cleaned data to
+the folder ‘Occurrences/cleaning/cleaned’.</p>
 <p>NOTE: the global GBIF data dump is &gt;250GB. For some taxonomic
 groups you will need considerable RAM (128GB+) to run the cleaning
 steps. Even then, the birds need to be processed in smaller chunks. If
@@ -393,23 +392,21 @@ terrestrial groups and ‘cleaningSteps_OBIS_12_2024.csv’ for marine
 groups (the steps are the same, but for terrestrial groups points
 falling outside of land areas are retained and non-land areas removed,
 and vice-versa for marine groups). <em>The path to the GADM and the BTAS
-grid shapefiles will need to be changed for your directory
+grid shapefiles may need to be changed for your directory
 structure</em>.</p></li>
 <li><p>The equal-area grid for the BTAS region (BTAS_grid_100km.gpkg),
 available in the ‘Data’ folder.</p></li>
-<li><p>You will need to create a version of GADM called
-‘GADM_410_land_Equal_Area.gpkg’. This is simply GADM that has been
-unioned (i.e. all land borders removed) and preprojected to that of the
-rest of the project: World Cylindrical Equal Area (+proj=cea +lat_ts=0
-+lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs) This is to act as
-a mask to remove points that fall in non-land (terrestrial groups) or
-land (marine areas). You may need to do some manual cleaning within New
-Guinea and a few other locations where the internal borders within GADM
-have not been aligned properly.</p></li>
+<li><p>A (slightly cleaned) version of GADM 4.1 for the BTAS region
+‘(GADM_410_land_Equal_Area.gpkg)’ which defines land and non-land areas,
+available in the ‘Data’ folder.</p></li>
 </ul>
 </div>
-<div id="summarise" class="section level3">
-<h3>2. Summarise</h3>
+<div id="summarise-occurrence-data-for-100-x-100-km-grid-cells-spatial_coverage.r" class="section level3">
+<h3>2. Summarise occurrence data for 100 x 100 km grid cells
+(Spatial_coverage.R)</h3>
+<p>Generate the various metrics described in the Supplementary Material.
+Figures are saved to the folder ‘Figures’. Results tables are saved to
+the folder ‘Results’.</p>
 </div>
 </div>
 
