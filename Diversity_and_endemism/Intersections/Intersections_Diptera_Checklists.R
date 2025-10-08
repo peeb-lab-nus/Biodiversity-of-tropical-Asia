@@ -24,7 +24,7 @@ library(dplyr)
 library(tidyr)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                  # project dir
+projDir   <- "Diversity_and_endemism"                     # project dir
 dataDir   <- file.path("Diptera", "data", "directory")    # dir that contains the checklist data
 
 ### You shouldn't need to adjust these folders

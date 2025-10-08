@@ -23,7 +23,7 @@ library(tidyr)
 library(stringr)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                  # project dir
+projDir   <- "Diversity_and_endemism"                     # project dir
 dataDir   <- file.path("Crab", "data", "directory")       # dir that contains the rangemaps data
 
 ### You shouldn't need to adjust these folders

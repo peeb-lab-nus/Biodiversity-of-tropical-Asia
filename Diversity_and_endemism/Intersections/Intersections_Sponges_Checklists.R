@@ -35,7 +35,7 @@ library(dplyr)
 library(tidyr)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir <- "Diversity"                                      # project dir
+projDir   <- "Diversity_and_endemism"                       # project dir
 
 ### You shouldn't need to adjust these folders
 resDir  <- file.path(projDir, "Intersections")              # dir to save results to

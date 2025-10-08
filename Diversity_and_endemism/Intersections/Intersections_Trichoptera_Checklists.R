@@ -21,31 +21,18 @@
 #--------------------------------------------- Set-up ---------------------------------------------#
 #==================================================================================================#
 
-# rm(list = ls())
+rm(list = ls())
 
 ### Libraries
 library(readr)
 library(dplyr)
 library(tidyr)
 library(stringr)
-# library(ggplot2)
-library(sf)
-
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "trichoptera") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")   # dir that contains the function scripts
-gadmDir   <- file.path(baseDir, "spatial_data", "regions", "countries", "GADM", "GADM_4.1") # dir with gadm data
-
-
-
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                  # project dir
+projDir   <- "Diversity_and_endemism"                     # project dir
 dataDir   <- file.path("MilliBase", "data", "directory")  # dir that contains the checklist data
-gadmDir   <- file.path("GADM", "data", "directory")       # dir that contains GADM data
+gadmDir   <- file.path("GADM", "data", "directory")       # dir that contains GADM 4.1 (for country and province names)
 
 ### You shouldn't need to adjust these folders
 resDir    <- file.path(projDir, "Intersections")          # dir to save results to

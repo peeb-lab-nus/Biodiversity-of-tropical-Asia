@@ -48,18 +48,17 @@ gadmDir <- "/mnt/Work/spatial_data/regions/countries/GADM"
 
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir    <- "Diversity"                                    # project dir
-# dataDir    <- file.path("Butterfly", "data", "directory")    # dir that contains the checklist data
-# sdmDir     <- file.path("Yau", "SDM", "directory")           # dir containing SDM outputs from Yau
-# occDir     <- file.path("Yau", "point", "directory")         # dir containing ocurrence points from Yau
-# pinkertDir <- file.path("Pinkert", "checklist", "directory") # dir containing ocurrence points from Yau
-# gadmDir    <- file.path("GADM", "directory")                 # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
+projDir   <- "Diversity_and_endemism"                          # project dir
+dataDir    <- file.path("Butterfly", "data", "directory")    # dir that contains the checklist data
+sdmDir     <- file.path("Yau", "SDM", "directory")           # dir containing SDM outputs from Yau
+occDir     <- file.path("Yau", "point", "directory")         # dir containing ocurrence points from Yau
+pinkertDir <- file.path("Pinkert", "checklist", "directory") # dir containing ocurrence points from Yau
+gadmDir    <- file.path("GADM", "directory")                 # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
 resDir  <- file.path(projDir, "Intersections")            # dir to save results to
 funDir  <- file.path(projDir, "Analysis_functions")       # dir that contains the function scripts
 dataDir <- file.path(projDir, "Data")                      # dir that contains the subregions data
-
 
 #==================================================================================================#
 #------------------------------------------- Data prep --------------------------------------------#
@@ -222,7 +221,7 @@ occs <- occs %>%
                              which_species == "final"  ~ Species_final))
 
 ### Loop through full species list
-SpList <- unique(occs$Species)
+spList <- unique(occs$Species)
 pts <- data.frame(matrix(NA, ncol = nrow(regions) + 3))
 names(pts) <- c("Species", regions$Bioregion, "Total", "All_pts")
 pb <- txtProgressBar(1, length(spList), style = 3)

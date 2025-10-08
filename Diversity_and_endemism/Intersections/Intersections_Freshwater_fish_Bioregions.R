@@ -28,7 +28,7 @@ library(tidyr)
 library(units)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                            # project dir
+projDir   <- "Diversity_and_endemism"                               # project dir
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")            # dir that contains the rangemaps data
 hydroDir  <- file.path("IUCN", "HydroBASINS", "directory")          # dir containing hydroBASINs data
 taxonDir  <- file.path("IUCN", "assessments", "directory")          # dir that contains the taxonomy data (for description year)

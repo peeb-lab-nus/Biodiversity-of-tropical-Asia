@@ -45,25 +45,9 @@ library(readxl)
 library(kewr)
 library(stringdist)
 
-# DIRECTORIES ========================
-if(Sys.info()["user"] == "junyinglim"){
-  main.dir <- "~/OneDrive - National University of Singapore/PEEBL Projects/BTAS/"
-  powo.dir <- "~/OneDrive - National University of Singapore/PEEBL Research Assets/biodiversity-data/POWO/"
-}
-if(Sys.info()["user"] == "charlie"){
-  base.dir <- file.path("/mnt", "Work")
-  main.dir <- file.path(base.dir, "NUS", "BTAS")
-  powo.dir <- file.path(base.dir, "spatial_data", "biodiversity", "checklists", "plants", "POWO")
-}
-misc.dir <- file.path(main.dir, "BTAS_data","taxonomies")
-output.dir <- file.path(main.dir, "Intersections", "Intersections")  # dir to save checklists to
-fun.dir     <- file.path(main.dir, "Analysis_functions")              # dir that contains the function scripts
-
-
-
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                  # project dir
-dataDir   <- file.path("POWO", "data", "directory")       # dir that contains the checklist data
+projDir   <- "Diversity_and_endemism"                     # project dir
+dataDir   <- file.path("WCVP", "data", "directory")       # dir that contains the WCVP v13 checklist data
 
 ### You shouldn't need to adjust these folders
 resDir    <- file.path(projDir, "Intersections")          # dir to save results to
@@ -77,12 +61,12 @@ funDir    <- file.path(projDir, "Analysis_functions")     # dir that contains th
 source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
 
 # IMPORT DATA ========================
-plant_names <- read.table(file.path(dataDir, "wcvp_v13", "wcvp_names.csv"),
+plant_names <- read.table(file.path(dataDir, "wcvp_names.csv"),
                           header = TRUE, sep = "|", quote = "", fill = TRUE, encoding = "UTF-8")
 length(unique(plant_names$plant_name_id))  # 1,431,677
 sum(duplicated(plant_names$plant_name_id)) # checking for duplicates
 
-plant_dist <- read.table(file.path(dataDir, "wcvp_v13","wcvp_distribution.csv"),
+plant_dist <- read.table(file.path(dataDir,"wcvp_distribution.csv"),
                          header = TRUE, sep = "|", quote = "", fill = TRUE, encoding = "UTF-8")
 length(unique(plant_dist$plant_name_id))   # 440,341 names
 all(unique(plant_dist$plant_name_id) %in% unique(plant_names$plant_name_id)) # all are in plant_name
@@ -310,7 +294,7 @@ fern_families <- c("Gleicheniaceae",
                    "Salviniaceae",
                    "Cystodiaceae",
                    "Saccolomataceae")
-length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% fern_families]))      # 11,885 global species                                          # 3,903 species
+length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% fern_families]))      # 11,885 global species
 sum(trop_asia_plant_mat_final$Family %in% fern_families)                                        #  3,903 species
 sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% fern_families]) #  2,749 endemic species
 
@@ -318,7 +302,7 @@ sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% 
 lycophyte_families <- c("Lycopodiaceae",
                         "Selaginellaceae",
                         "Isoetaceae")
-length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% lycophyte_families]))      # 1,438 global species                                          # 3,903 species
+length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% lycophyte_families]))      # 1,438 global species
 sum(trop_asia_plant_mat_final$Family %in% lycophyte_families)                                        #   389 species
 sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% lycophyte_families]) #   302 endemic species
 
@@ -332,7 +316,7 @@ gymnosperm_families <- c("Araucariaceae",
                          "Gnetaceae",
                          "Cycadaceae",
                          "Cephalotaxaceae")
-length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% gymnosperm_families]))      # 946 global species                                          # 3,903 species
+length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% gymnosperm_families]))      # 946 global species
 sum(trop_asia_plant_mat_final$Family %in% gymnosperm_families)                                        # 288 species
 sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% gymnosperm_families]) # 266 endemic species
 
@@ -340,7 +324,7 @@ sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% 
 angiosperm_families <- all_plant_families[!all_plant_families %in% c(gymnosperm_families,
                                                                      lycophyte_families,
                                                                      fern_families)]
-length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% angiosperm_families]))      # 338,538 global species                                          # 3,903 species
+length(unique(plant_dist_clean$plant_name_id[plant_dist_clean$family %in% angiosperm_families]))      # 338,538 global species
 sum(trop_asia_plant_mat_final$Family %in% angiosperm_families)                                        #  70,082 species
 sum(trop_asia_plant_mat_final$AsiaEndemic[trop_asia_plant_mat_final$Family %in% angiosperm_families]) #  59,631 endemic species
 

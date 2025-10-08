@@ -9,10 +9,11 @@ library(tidyverse)
 library(reshape2)
 
 ## DIRECTORIES ====================
-proj.dir <- "Diversity"
+proj.dir <- "Diversity_and_endemism"
 data.dir <- file.path(proj.dir, "Intersections", "Intersections")
 fun.dir  <- file.path(proj.dir, "Analysis_functions")
 res.dir  <- file.path(proj.dir, "Endemicity", "Results")
+if(!dir.exists(res.dir)) { dir.create(res.dir, recursive = TRUE) }
 
 # ==================================================================================================
 ## IMPORT DATA ====================

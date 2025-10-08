@@ -30,7 +30,7 @@ library(tidyr)
 library(units)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                        # project dir
+projDir   <- "Diversity_and_endemism"                           # project dir
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
 taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
@@ -147,6 +147,7 @@ for(i in 1:length(spList)) {
 
 ### pivot results data frame so each regional polygon is a column
 intersections <- intersections %>%
+  mutate(Region = gsub(" ", "_", Region)) %>%
   pivot_wider(names_from  = Region,
               values_from = Intersect_area,
               values_fn   = sum,

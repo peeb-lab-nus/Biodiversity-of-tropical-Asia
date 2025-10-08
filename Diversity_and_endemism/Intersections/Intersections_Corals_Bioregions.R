@@ -27,18 +27,8 @@ library(dplyr)
 library(tidyr)
 library(units)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data")                          # dir that contains the regions data
-rangeDir  <- file.path(baseDir, "spatial_data", "biodiversity", "rangemaps", "corals", "IUCN_v2024") # dir that contains the rangemaps data
-taxonDir  <- file.path(baseDir, "spatial_data", "biodiversity", "IUCN_assessments", "corals") # dir that contains the taxonomy data
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")          # dir that contains the function scripts
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections")               # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Corals")                     # dir to save species intersections to
-
-
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                        # project dir
+projDir   <- "Diversity_and_endemism"                           # project dir
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
 taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
@@ -47,7 +37,7 @@ gadmDir   <- file.path("GADM", "directory")                     # dir that conta
 regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
 funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
 resDir    <- file.path(projDir, "Intersections")                # dir to save results to
-spDir     <- file.path(resDir,  "Intersections", "Corals")   # dir to save species intersections to
+spDir     <- file.path(resDir,  "Intersections", "Corals")      # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -70,7 +60,7 @@ source(file.path(funDir, "Intersections", "convertToPA.R"))
 source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
 
 ### regions data to calculate polygons for
-regions <- st_read(file.path(regionDir, "MEOW_BTAS.gpkg"))
+regions <- st_read(file.path(dataDir, "MEOW_BTAS.gpkg"))
 
 ### global GADM for masking out dodgy coastlines in IUCN range maps on global range maps
 gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
@@ -134,6 +124,7 @@ for(i in 1:length(spList)) {
 
 ### pivot results data frame so each regional polygon is a column
 intersections <- intersections %>%
+  mutate(Region = gsub(" ", "_", Region)) %>%
   pivot_wider(names_from  = Region,
               values_from = Intersect_area,
               values_fn   = sum,
@@ -146,7 +137,6 @@ taxonomy <- read.csv(file.path(taxonDir, "taxonomy.csv")) %>%
   mutate(Species = gsub(" ", "_", Species)) %>%
   mutate(Year = clean_publication_dates(authority, max = TRUE)) %>%
   select(Species, Genus, Family, Year)
-
 
 ### merge intersections with taxonomy data frame
 intersections <- intersections %>%

@@ -23,16 +23,8 @@ rm(list = ls())
 library(dplyr)
 library(tidyr)
 
-### Locations of data, scripts and results
-baseDir   <- "/mnt/Work"
-regionDir <- file.path(baseDir, "NUS", "BTAS_data", "Bioregions") # dir that contains the regions data
-dataDir   <- file.path(baseDir, "spatial_data", "biodiversity", "checklists", "spiders") # dir that contains the checklist data
-resDir    <- file.path(baseDir, "NUS", "BTAS", "Intersections") # dir to save results to
-funDir    <- file.path(baseDir, "NUS", "BTAS", "Analysis_functions")   # dir that contains the function scripts
-
-
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                  # project dir
+projDir   <- "Diversity_and_endemism"                     # project dir
 dataDir   <- file.path("MilliBase", "data", "directory")  # dir that contains the checklist data
 
 ### You shouldn't need to adjust these folders

@@ -49,7 +49,7 @@ library(tidyr)
 library(units)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Diversity"                                      # project dir
+projDir   <- "Diversity_and_endemism"                         # project dir
 rangeDir  <- file.path("BirdLife", "rangemaps", "directory")  # dir that contains the rangemaps data
 taxonDir  <- file.path("BirdLife", "taxonomy", "directory")   # dir that contains the taxonomy data ('HBW_BirdLife List of Birds v.81.csv')
 gadmDir   <- file.path("GADM", "directory")                   # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')

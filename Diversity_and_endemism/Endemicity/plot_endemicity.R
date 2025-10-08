@@ -5,24 +5,20 @@ rm(list = ls())
 
 library(dplyr)
 library(plyr)
-# library(tidyverse)
 library(reshape2)
 library(ggplot2)
-# library(terra)
 library(sf)
-# library(tidyterra)
 library(cowplot)
 library(patchwork)
 library(ggnewscale)
 library(scatterpie)
-# library(colors3d)
 
 ## DIRECTORIES ====================
-proj.dir <- "Diversity"
+proj.dir <- "Diversity_and_endemism"
 data.dir <- file.path(proj.dir, "Intersections", "Intersections")
-map.dir  <- file.path(proj.dir, "Maps")
 res.dir  <- file.path(proj.dir, "Endemicity", "Results")
 fig.dir  <- file.path(proj.dir, "Endemicity", "Figures")
+if(!dir.exists(fig.dir)) { dir.create(fig.dir, recursive = TRUE) }
 
 # ==================================================================================================
 ## DEFINE GRAPHICAL PARAMETERS
@@ -170,9 +166,9 @@ ggsave(global_endemicity_plot,
 # ==================================================================================================
 
 # Read in maps
-terr_bioregions <- readRDS(file.path(map.dir, "terr_bioregions.rds"))
-mare_bioregions <- readRDS(file.path(map.dir, "mare_bioregions.rds"))
-base_map        <- readRDS(file.path(map.dir, "gadm_base_map.rds"))
+terr_bioregions <- readRDS(file.path(data.dir, "terr_bioregions.rds"))
+mare_bioregions <- readRDS(file.path(data.dir, "mare_bioregions.rds"))
+base_map        <- readRDS(file.path(data.dir, "gadm_base_map.rds"))
 
 # Import data
 region_end_invert <- read.csv(file.path(res.dir, "taxon_region_endemicity_long_df_terrestrial_and_freshwater_invertebrates_mean.csv"))
