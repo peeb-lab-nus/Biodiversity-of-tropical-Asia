@@ -9,7 +9,11 @@ library(tidyverse)
 library(reshape2)
 
 ## DIRECTORIES ====================
+
+# Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
 proj.dir <- "Diversity_and_endemism"
+
+# You shouldn't need to adjust these folders
 data.dir <- file.path(proj.dir, "Intersections", "Intersections")
 fun.dir  <- file.path(proj.dir, "Analysis_functions")
 res.dir  <- file.path(proj.dir, "Endemicity", "Results")

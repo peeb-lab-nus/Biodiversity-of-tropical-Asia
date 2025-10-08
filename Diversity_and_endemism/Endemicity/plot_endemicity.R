@@ -14,7 +14,11 @@ library(ggnewscale)
 library(scatterpie)
 
 ## DIRECTORIES ====================
+
+# Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
 proj.dir <- "Diversity_and_endemism"
+
+# You shouldn't need to adjust these folders
 data.dir <- file.path(proj.dir, "Intersections", "Intersections")
 res.dir  <- file.path(proj.dir, "Endemicity", "Results")
 fig.dir  <- file.path(proj.dir, "Endemicity", "Figures")

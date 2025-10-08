@@ -41,3 +41,7 @@ Once all intersections have been run results can be summarised across the region
 -   'plot_endemicity.R' generates the figures in the main manuscript and supplementary material, and writes them to the folder 'Figures'.
 
 ### 3. Description rates
+
+Requires the file 'Endemicity/taxon_full_list.csv' generated from 'calc_endemicity.R' in step 2.\
+\
+Generates species discovery curves and description rates (based on the year that each specific epithet was described) for each taxon, as well as summarised for taxonomic groups.
