@@ -26,22 +26,18 @@ library(dplyr)
 projDir  <- "Threats"                                             # project dir
 divDir   <- file.path("Diversity_and_endemism", "directory")      # path to 'Diversity_and_endemism' folder (for non-IUCN intersections)
 
-
-projDir <- "/mnt/Work/NUS/Biodiversity-of-tropical-Asia/Threats"
-divDir  <- "/mnt/Work/NUS/BTAS"
-
 ### You shouldn't need to adjust these folders
 iucnDir  <- file.path(projDir, "Intersections", "Intersections", "Final")  # dir with IUCN range map intersections
 interDir <- file.path(divDir,  "Intersections", "Intersections")           # dir with intersections in the 'Diversity_and_endemism' folder
 resDir   <- file.path(projDir, "Intersections")                            # dir to save results to
 
-### List of taxa
-taxa <- read_csv(file.path(projDir, "Global_totals.csv"))
-taxa <- taxa$Name
-
 #==================================================================================================#
 #------------------------------------------- Processing -------------------------------------------#
 #==================================================================================================#
+
+### List of taxa
+taxa <- read_csv(file.path(projDir, "Global_totals.csv"))
+taxa <- taxa$Name
 
 for(taxon in taxa) {
   ### For groups with IUCN range maps get from intersections carried out for threats analysis

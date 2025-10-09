@@ -81,3 +81,15 @@ BirdLife 2024: birds
 IUCN 2025: data for all species (see top of script
 
 IUCN 2024: amphibians, birds, freshwater_crabs, mammals, reptiles
+
+### 5. Summarise across tropical Asia and subregions and generate figures (New_threats.R)
+
+Summarises the assessment and threat information across the region, for subregions and across taxonomic groups. Examines three facets:
+
+1)  The proportion of species in each Red List status (or non-evaluated) for each taxon across tropical Asia, and for each taxonomic group in each subregion.
+
+2)  The proportion of species in each taxon listed under different threats (threats are assigned to six broad categories).
+
+3)  The year of the latest assessment (if the species is assessed) for each taxon and taxonomic group.
+
+Figures are written to the folder 'Figures'.

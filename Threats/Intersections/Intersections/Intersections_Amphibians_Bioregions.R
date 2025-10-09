@@ -5,11 +5,11 @@
 ### 05/2024
 ###
 ### Regions map used: Bioregions_rangemaps
-### Taxonomy used:    IUCN 2024.1 - downloaded 21/08/2024
-### Rangemaps used:   IUCN 2024.1 - downloaded 21/08/2024
+### Taxonomy used:    IUCN 2024.1 - downloaded 01/08/2024
+### Rangemaps used:   IUCN 2024.1 - downloaded 01/08/2024
 ###
 ### CITATION: IUCN 2024. The IUCN Red List of Threatened Species. 2024.1.
-###   https://www.iucnredlist.org. Downloaded on 21/08/2024.
+###      https://www.iucnredlist.org. Downloaded on 24/05/2024.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
