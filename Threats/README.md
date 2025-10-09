@@ -34,12 +34,50 @@ Input data required (depends on taxon):
 
 -   The GBIF taxonomic backbone - available at <https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c>
 
-### 2. Summarise diversity and endemism in tropical Asia and subregions
+### 2. Process intersections (Final_processing.R)
 
-Once all intersections have been run results can be summarised across the region. The two scripts necessary are in the folder 'Endemicity'.
+Once all the IUCN range map intersections have been run the script 'Intersections/Final_processing.R' will read in the intersections spreadsheets for all taxa and do final processing. For taxa without IUCN range maps it will read in the intersections spreadsheets generated in the 'Diversity_and_endemism' folder. Each taxon's spreadsheet is saved in the 'Intersections' folder.
 
--   First, 'calc_endemicity.R' will read in the intersections files inside the folder 'Intersections/Intersections', and summarise richness and endemicity for tropical Asia, and for each subregion. Results are saved as .csv files in the folder 'Results'. Diversity and endemicity are calculated at the taxon-level, and also summarised across the four taxonomic groups.
+There are a few final processing steps:
 
--   'plot_endemicity.R' generates the figures in the main manuscript and supplementary material, and writes them to the folder 'Figures'.
+-   Merges Andamans into IndoChina.
 
-### 
+-   Merges Palawan into Philippines.
+
+-   Removes Northern Australia and species only found there within region.
+
+-   Removes Northwest and Northeast Australian Shelves and species only found within those regions.
+
+### 3. Generate look-up table to harmonise WCVP and IUCN names (get_threats_vascularplants.R)
+
+This script will generate a spreadsheet to harmonise WCVP names (that used in our intersections) with the IUCN names (that used for the IUCN assessments).
+
+### 4. Align the IUCN assessments with intersections (Process_intersections_and_iucn.R)
+
+This script reads in the IUCN assessments and joins them with the intersections data. Will generate a file 'All_iucn_and_threats.csv' that has the IUCN Red List status and threat score (or NA if absent) for all species intersecting with tropical Asia.
+
+It is important that you use the same assessment and threat year as those used for generating the assessments. Some care will be needed to make sure you have the same naming structure as used in this script, and adjust as necessary. For this project we used:
+
+***IUCN taxonomies:***
+
+IUCN 2025: plants, bony_fish, freshwater_fish, corals, all non-chordates
+
+IUCN 2024: amphibians, freshwater_crabs, mammals, reptiles
+
+BirdLife 2024: birds
+
+WCVP 2025: plants
+
+***IUCN assessments - save in folder with structure 'taxon_name/IUCN_v2024' etc:***
+
+IUCN 2025: plants, bony_fish, freshwater_fish, corals, all non-chordates
+
+IUCN 2024: amphibians, freshwater_crabs, mammals, reptiles
+
+BirdLife 2024: birds
+
+***IUCN threat scores:***
+
+IUCN 2025: data for all species (see top of script
+
+IUCN 2024: amphibians, birds, freshwater_crabs, mammals, reptiles
