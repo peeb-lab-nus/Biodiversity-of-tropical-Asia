@@ -34,11 +34,13 @@ Input data required (depends on taxon):
 
 ### 2. Summarise diversity and endemism in tropical Asia and subregions
 
-Once all intersections have been run results can be summarised across the region. The two scripts necessary are in the folder 'Endemicity'.
+Once all intersections have been run results can be summarised across the region. The three scripts necessary are in the folder 'Endemicity'.
 
 -   First, 'calc_endemicity.R' will read in the intersections files inside the folder 'Intersections/Intersections', and summarise richness and endemicity for tropical Asia, and for each subregion. Results are saved as .csv files in the folder 'Results'. Diversity and endemicity are calculated at the taxon-level, and also summarised across the four taxonomic groups.
 
 -   'plot_endemicity.R' generates the figures in the main manuscript and supplementary material, and writes them to the folder 'Figures'.
+
+-   'Generate_summary_tables.R' will generate the summary tables of diveristy and endemism for each taxon for tropical Asia and each subregion.
 
 ### 3. Description rates
 

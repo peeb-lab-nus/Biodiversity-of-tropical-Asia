@@ -356,86 +356,30 @@ display: none;
 <h2>Analysis and results scripts for the Biogeography of Tropical Asia
 project</h2>
 </div>
-<div id="diversity-and-endemism-analyses" class="section level2">
-<h2>- Diversity and endemism analyses</h2>
-<p>Scripts to carry out analyses for the ‘Diversity and endemism’
-section of Lim et al. ‘The rich, unique, and threatened biodiversity of
-tropical Asia’. First, we generate checklists of species present in each
-subregion, then these are summarised to create the tables and figures in
-the manuscript.</p>
-<p>Also runs the ‘Rates of species discovery’ analyses.</p>
-<div id="species-intersections-with-tropical-asia-and-subregions" class="section level3">
-<h3>1. Species intersections with tropical Asia and subregions</h3>
-<p>Scripts inside the folder ‘Intersections’.</p>
-<p>Processes the biodiversity data (rangemaps, checklists or occurrence
-data) to generate a species list for each subregion. Each taxon has a
-separate script (note, some groups may take a week or more to run
-depending on how many threads you have).</p>
-<p>As we don’t own the underlying data, in each case you will need to
-access the data sources from the data provider outlined in the
-Supplementary Material. This may also be the case for the taxonomic
-information if the spatial data does not have all the relevant
-information (e.g. the description year). You will also need some other
-spatial data sources, such as GADM 4.1 for coastline data or hydroBASINs
-data from the IUCN, outlined below. Other spatial data required are in
-the folder ‘Data’.</p>
-<p><em>IMPORTANT: to fully replicate the exact results you will need the
-same versions as the ones outlined at the top of each script. Using more
-recent versions may result in differing results.</em></p>
-<p>Input data required (depends on taxon):</p>
-<ul>
-<li><p>various spatial data (e.g. shapefiles with the subregions) stored
-in folder ‘Data’.</p></li>
-<li><p>the biodiversity data source (outlined at top of each
-script).</p></li>
-<li><p>if necessary, a separate taxonomy information source for
-description dates and higher-order taxonomic information (outlined at
-top of each script).</p></li>
-<li><p>You will need to create a version of GADM called
-‘GADM_410_land_Equal_Area.gpkg’. This is simply the global GADM that has
-been unioned (i.e. all land borders removed) and reprojected to that of
-the rest of the project: World Cylindrical Equal Area (+proj=cea
-+lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs). This
-is to act as a mask on top of the range maps to remove parts of range
-that fall in ocean areas. You may need to do some manual cleaning within
-New Guinea and a few other locations where the internal borders within
-GADM have not been aligned properly.</p></li>
-<li><p>HydroBASINS data (2023/08 version) available on the IUCN website.
-You will need levels 08, 10 and 12 - see <a href="https://www.iucnredlist.org/resources/spatial-data-download" class="uri">https://www.iucnredlist.org/resources/spatial-data-download</a></p></li>
-<li><p>The GBIF taxonomic backbone - available at <a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c" class="uri">https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</a></p></li>
-<li><p>WoRMS taxonomic data - request here <a href="https://www.marinespecies.org/usersrequest.php" class="uri">https://www.marinespecies.org/usersrequest.php</a></p></li>
-</ul>
+<div id="origins-and-assembly-analyses" class="section level2">
+<h2>- Origins and Assembly analyses</h2>
+<p>Scripts to carry out analyses for the ‘Origins and Assembly’ section
+of Lim et al. ‘The rich, unique, and threatened biodiversity of tropical
+Asia’. For three higher taxa (plants, tetrapods, and teleost fish), we
+iterate through each family and genus to determine the number of taxa
+endemic to tropical Asia, their crown and stem ages from 100
+phylogenetic trees from corresponding posterior distributions, and their
+habitat affinities: montane, tropical rainforest, or tropical seasonal
+for terrestrial taxa; reef-associated versus pelagic for marine
+taxa.</p>
 </div>
-<div id="summarise-diversity-and-endemism-in-tropical-asia-and-subregions" class="section level3">
-<h3>2. Summarise diversity and endemism in tropical Asia and
-subregions</h3>
-<p>Once all intersections have been run results can be summarised across
-the region. The three scripts necessary are in the folder
-‘Endemicity’.</p>
-<ul>
-<li><p>First, ‘calc_endemicity.R’ will read in the intersections files
-inside the folder ‘Intersections/Intersections’, and summarise richness
-and endemicity for tropical Asia, and for each subregion. Results are
-saved as .csv files in the folder ‘Results’. Diversity and endemicity
-are calculated at the taxon-level, and also summarised across the four
-taxonomic groups.</p></li>
-<li><p>‘plot_endemicity.R’ generates the figures in the main manuscript
-and supplementary material, and writes them to the folder
-‘Figures’.</p></li>
-<li><p>‘Generate_summary_tables.R’ will generate the summary tables of
-diveristy and endemism for each taxon for tropical Asia and each
-subregion.</p></li>
-</ul>
-</div>
-<div id="description-rates" class="section level3">
-<h3>3. Description rates</h3>
-<p>Requires the file ‘Endemicity/taxon_full_list.csv’ generated from
-‘calc_endemicity.R’ in step 2.<br />
-<br />
-Generates species discovery curves and description rates (based on the
-year that each specific epithet was described) for each taxon, as well
-as summarised for taxonomic groups.</p>
-</div>
+<div id="spatial-and-biological-information" class="section level1">
+<h1>Spatial and Biological Information</h1>
+<p>We use biodiversity distribution data from published sources. As we
+don’t own the underlying data, in each case you will need to access the
+data sources from the data provider outlined in the Supplementary
+Material. This may also be the case for the taxonomic information if the
+spatial data does not have all the relevant information.</p>
+<p>You will also need some other published spatial data sources, such as
+polygons of botanical countries from the World Geographical Scheme for
+Recording Plant Distributions (WGSRPD), elevation from the Shuttle Radar
+Topography Mission (SRTM), Koppen climate maps from Beck et al. 2018
+(doi.org/10.1038/sdata.2018.214).</p>
 </div>
 
 

@@ -356,21 +356,35 @@ display: none;
 <h2>Analysis and results scripts for the Biogeography of Tropical Asia
 project</h2>
 </div>
-<div id="diversity-and-endemism-analyses" class="section level2">
-<h2>- Diversity and endemism analyses</h2>
-<p>Scripts to carry out analyses for the ‘Diversity and endemism’
-section of Lim et al. ‘The rich, unique, and threatened biodiversity of
-tropical Asia’. First, we generate checklists of species present in each
-subregion, then these are summarised to create the tables and figures in
-the manuscript.</p>
-<p>Also runs the ‘Rates of species discovery’ analyses.</p>
+<div id="threats-analyses" class="section level2">
+<h2>- Threats analyses</h2>
+<p>Scripts to carry out analyses for the ‘Threats’ section of Lim et
+al. ‘The rich, unique, and threatened biodiversity of tropical Asia’.
+First, we generate checklists of species present in each subregion, then
+these are summarised to create the tables and figures in the
+manuscript.</p>
+<p>NOTES:</p>
+<ol style="list-style-type: decimal">
+<li><p>For groups with IUCN range maps available, we need to run the
+species intersections with the subregions in the same manner as for the
+‘Diversity and endemism’ section. The results will differ slightly with
+the results from that section when we have used a different range map
+source (e.g. we used MDD for mammals for the diversity and endemism
+analyses) or we have used a different version of the IUCN range
+maps.</p></li>
+<li><p>For groups without range maps (ie. checklist data, we will
+directly use the files outputted during the diversity and endemism
+analyses. Therefore, you must run those files (in the
+‘Diversity_and_endemism/Intersections’ folder) first.</p></li>
+<li><p>The ‘Rates of species discovery’ analyses are run as part of the
+previous section, ‘Diversity_and_endemism’.</p></li>
+</ol>
 <div id="species-intersections-with-tropical-asia-and-subregions" class="section level3">
 <h3>1. Species intersections with tropical Asia and subregions</h3>
-<p>Scripts inside the folder ‘Intersections’.</p>
-<p>Processes the biodiversity data (rangemaps, checklists or occurrence
-data) to generate a species list for each subregion. Each taxon has a
-separate script (note, some groups may take a week or more to run
-depending on how many threads you have).</p>
+<p>Scripts inside the folder ‘Intersections’. Scripts process the
+biodiversity data (IUCN rangemaps) to generate a species list for each
+subregion. Each taxon has a separate script (note, some groups may take
+a week or more to run depending on how many threads you have).</p>
 <p>As we don’t own the underlying data, in each case you will need to
 access the data sources from the data provider outlined in the
 Supplementary Material. This may also be the case for the taxonomic
@@ -403,38 +417,75 @@ GADM have not been aligned properly.</p></li>
 <li><p>HydroBASINS data (2023/08 version) available on the IUCN website.
 You will need levels 08, 10 and 12 - see <a href="https://www.iucnredlist.org/resources/spatial-data-download" class="uri">https://www.iucnredlist.org/resources/spatial-data-download</a></p></li>
 <li><p>The GBIF taxonomic backbone - available at <a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c" class="uri">https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</a></p></li>
-<li><p>WoRMS taxonomic data - request here <a href="https://www.marinespecies.org/usersrequest.php" class="uri">https://www.marinespecies.org/usersrequest.php</a></p></li>
 </ul>
 </div>
-<div id="summarise-diversity-and-endemism-in-tropical-asia-and-subregions" class="section level3">
-<h3>2. Summarise diversity and endemism in tropical Asia and
-subregions</h3>
-<p>Once all intersections have been run results can be summarised across
-the region. The three scripts necessary are in the folder
-‘Endemicity’.</p>
+<div id="process-intersections-final_processing.r" class="section level3">
+<h3>2. Process intersections (Final_processing.R)</h3>
+<p>Once all the IUCN range map intersections have been run the script
+‘Intersections/Final_processing.R’ will read in the intersections
+spreadsheets for all taxa and do final processing. For taxa without IUCN
+range maps it will read in the intersections spreadsheets generated in
+the ‘Diversity_and_endemism’ folder. Each taxon’s spreadsheet is saved
+in the ‘Intersections’ folder.</p>
+<p>There are a few final processing steps:</p>
 <ul>
-<li><p>First, ‘calc_endemicity.R’ will read in the intersections files
-inside the folder ‘Intersections/Intersections’, and summarise richness
-and endemicity for tropical Asia, and for each subregion. Results are
-saved as .csv files in the folder ‘Results’. Diversity and endemicity
-are calculated at the taxon-level, and also summarised across the four
-taxonomic groups.</p></li>
-<li><p>‘plot_endemicity.R’ generates the figures in the main manuscript
-and supplementary material, and writes them to the folder
-‘Figures’.</p></li>
-<li><p>‘Generate_summary_tables.R’ will generate the summary tables of
-diveristy and endemism for each taxon for tropical Asia and each
-subregion.</p></li>
+<li><p>Merges Andamans into IndoChina.</p></li>
+<li><p>Merges Palawan into Philippines.</p></li>
+<li><p>Removes Northern Australia and species only found there within
+region.</p></li>
+<li><p>Removes Northwest and Northeast Australian Shelves and species
+only found within those regions.</p></li>
 </ul>
 </div>
-<div id="description-rates" class="section level3">
-<h3>3. Description rates</h3>
-<p>Requires the file ‘Endemicity/taxon_full_list.csv’ generated from
-‘calc_endemicity.R’ in step 2.<br />
-<br />
-Generates species discovery curves and description rates (based on the
-year that each specific epithet was described) for each taxon, as well
-as summarised for taxonomic groups.</p>
+<div id="generate-look-up-table-to-harmonise-wcvp-and-iucn-names-get_threats_vascularplants.r" class="section level3">
+<h3>3. Generate look-up table to harmonise WCVP and IUCN names
+(get_threats_vascularplants.R)</h3>
+<p>This script will generate a spreadsheet to harmonise WCVP names (that
+used in our intersections) with the IUCN names (that used for the IUCN
+assessments).</p>
+</div>
+<div id="align-the-iucn-assessments-with-intersections-process_intersections_and_iucn.r" class="section level3">
+<h3>4. Align the IUCN assessments with intersections
+(Process_intersections_and_iucn.R)</h3>
+<p>This script reads in the IUCN assessments and joins them with the
+intersections data. Will generate a file ‘All_iucn_and_threats.csv’ that
+has the IUCN Red List status and threat score (or NA if absent) for all
+species intersecting with tropical Asia.</p>
+<p>It is important that you use the same assessment and threat year as
+those used for generating the assessments. Some care will be needed to
+make sure you have the same naming structure as used in this script, and
+adjust as necessary. For this project we used:</p>
+<p><strong><em>IUCN taxonomies:</em></strong></p>
+<p>IUCN 2025: plants, bony_fish, freshwater_fish, corals, all
+non-chordates</p>
+<p>IUCN 2024: amphibians, freshwater_crabs, mammals, reptiles</p>
+<p>BirdLife 2024: birds</p>
+<p>WCVP 2025: plants</p>
+<p><strong><em>IUCN assessments - save in folder with structure
+‘taxon_name/IUCN_v2024’ etc:</em></strong></p>
+<p>IUCN 2025: plants, bony_fish, freshwater_fish, corals, all
+non-chordates</p>
+<p>IUCN 2024: amphibians, freshwater_crabs, mammals, reptiles</p>
+<p>BirdLife 2024: birds</p>
+<p><strong><em>IUCN threat scores:</em></strong></p>
+<p>IUCN 2025: data for all species (see top of script</p>
+<p>IUCN 2024: amphibians, birds, freshwater_crabs, mammals, reptiles</p>
+</div>
+<div id="summarise-across-tropical-asia-and-subregions-and-generate-figures-new_threats.r" class="section level3">
+<h3>5. Summarise across tropical Asia and subregions and generate
+figures (New_threats.R)</h3>
+<p>Summarises the assessment and threat information across the region,
+for subregions and across taxonomic groups. Examines three facets:</p>
+<ol style="list-style-type: decimal">
+<li><p>The proportion of species in each Red List status (or
+non-evaluated) for each taxon across tropical Asia, and for each
+taxonomic group in each subregion.</p></li>
+<li><p>The proportion of species in each taxon listed under different
+threats (threats are assigned to six broad categories).</p></li>
+<li><p>The year of the latest assessment (if the species is assessed)
+for each taxon and taxonomic group.</p></li>
+</ol>
+<p>Figures are written to the folder ‘Figures’.</p>
 </div>
 </div>
 
