@@ -30,6 +30,7 @@ if(!dir.exists(fig.dir)) { dir.create(fig.dir, recursive = TRUE) }
 
 ### Read in taxon info which has info on plot order and colours etc
 taxon_info <- read.csv(file.path(proj.dir, "Global_totals.csv")) %>%
+  filter(Taxon != "Sponges") %>%
   arrange(desc(Group), desc(Taxon_Higher), Taxon) %>%
   mutate(Order = 1:nrow(.)) %>%
   mutate(Taxon = case_when(Taxon == "Flowering plants"       ~ "Flowering\nplants",

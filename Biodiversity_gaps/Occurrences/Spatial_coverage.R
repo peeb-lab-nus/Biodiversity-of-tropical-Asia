@@ -14,12 +14,11 @@
 
 rm(list = ls())
 
+### Libraries
 library(sf)
 library(dplyr)
 library(readr)
 library(ggplot2)
-library(viridis)
-library(gridExtra)
 library(patchwork)
 library(lubridate)
 
@@ -47,7 +46,8 @@ source(file.path(funDir, "Point_plotting", "samplingCoveragePlottingFunctions.R"
 taxonInfo <- read_csv(file.path(projDir, "Global_totals.csv")) %>%
   mutate(Taxon_Group = apply(., 1, function(x) paste(x["Group"], x["Taxon_Higher"]))) %>%
   mutate(Taxon_Group = gsub(" NA", "", Taxon_Group)) %>%
-  arrange(desc(Taxon_Group))
+  arrange(desc(Taxon_Group)) %>%
+  filter(Taxon != "Sponges")
 
 ### Groups to aggregate to
 group_list <- unique(taxonInfo$Taxon_Group)

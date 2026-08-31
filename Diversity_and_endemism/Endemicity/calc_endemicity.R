@@ -31,6 +31,7 @@ bioregion_info <- read.csv(file.path(main.dir, "Bioregion_info.csv"))
 
 # Spreadsheet with summary info on each taxon
 taxonInfo <- read.csv(file.path(main.dir, "Global_totals.csv")) %>%
+  filter(Taxon != "Sponges") %>%
   mutate(Realm = apply(., 1, function(x) trimws(paste(x["Group"], x["Taxon_Higher"])))) %>%
   arrange(desc(Group), desc(Taxon_Higher), Taxon) %>%
   mutate(Order = 1:nrow(.)) %>%

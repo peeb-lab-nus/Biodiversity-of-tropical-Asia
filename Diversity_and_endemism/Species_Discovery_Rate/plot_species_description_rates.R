@@ -28,7 +28,8 @@ source(file.path(fun.dir, "Discovery_rates", "generate_description_curves.R"))
 
 ### Spreadsheet with taxon info
 taxonInfo <- read.csv(file.path(proj.dir, "Global_totals.csv")) %>%
-  arrange(desc(Group), desc(Taxon_Higher), Taxon)
+  arrange(desc(Group), desc(Taxon_Higher), Taxon) %>%
+  filter(Taxon != "Sponges")
 
 ### Read in endemicity data (out-putted from calc_endemicity.R)
 taxa_full_list <- read.csv(file.path(data.dir, "taxon_full_list.csv"))

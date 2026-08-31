@@ -27,7 +27,8 @@ if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
 
 ### Spreadsheet with taxon information
 info <- read.csv(file.path(projDir, "Global_totals.csv")) %>%
-  arrange(desc(Group), desc(Taxon_Higher), Taxon)
+  arrange(desc(Group), desc(Taxon_Higher), Taxon) %>%
+  filter(Taxon != "Sponges")
 
 #==================================================================================================#
 #---------------------------------- Summary for all tropical Asia ---------------------------------#
