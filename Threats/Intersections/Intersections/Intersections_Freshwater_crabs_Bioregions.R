@@ -2,14 +2,14 @@
 ### Run intersections between freshwater crabs (IUCN) and bioregions
 ### Charlie Marsh
 ### charliem2003@github
-### 08/2024
+### 06/2026
 ###
 ### Regions map used: Bioregions_rangemaps
-### Taxonomy used:    IUCN 2024.1 - downloaded 01/08/2024
-### Rangemaps used:   IUCN 2024.1 - downloaded 01/08/2024
+### Taxonomy used:    IUCN 2025.2 - downloaded 11/06/2026
+### Rangemaps used:   IUCN 2025.2 - downloaded 11/06/2026
 ###
-### CITATION: IUCN 2024. The IUCN Red List of Threatened Species. 2024.1.
-###      https://www.iucnredlist.org. Downloaded on 24/05/2024.
+### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025.2.
+###   https://www.iucnredlist.org. Downloaded on 11/06/2026.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -26,20 +26,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                              # project dir
-rangeDir  <- file.path("IUCN", "rangemaps", "directory")            # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")          # dir that contains the iucn assessments
-gadmDir   <- file.path("GADM", "directory")                         # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
-hydroDir  <- file.path("IUCN", "HydroBasins", "directory")          # dir that contains the hydrobasins data
+projDir   <- "Threats"
+rangeDir  <- file.path("IUCN", "rangemaps", "directory")             # dir that contains the rangemaps data
+taxonDir  <- file.path("IUCN", "assessments", "directory")           # dir that contains the taxonomy data (for description year)
+gadmDir   <- file.path("GADM", "directory")                          # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
-regionDir <- file.path(projDir, "Data")                             # dir that contains the subregions data
-funDir    <- file.path(projDir, "Analysis_functions")               # dir that contains the function scripts
-resDir    <- file.path(projDir, "Intersections")                    # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Freshwater_crabs") # dir to save species intersections to
+regionDir <- file.path(projDir, "Data")                              # dir that contains the subregions data
+funDir    <- file.path(projDir, "Analysis_functions")                # dir that contains the function scripts
+resDir    <- file.path(projDir, "Intersections")                     # dir to save results to
+spDir     <- file.path(resDir,  "Intersections", "Freshwater_crabs") # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -73,42 +71,42 @@ hydroBasin <- bind_rows(st_read(file.path(hydroDir, "HydroBASINS_level08", "Hydr
                         st_read(file.path(hydroDir, "HydroBASINS_level12", "HydroBASINS_level12_w_attributes_2023_08.shp"))) %>%
   select(hybas_id)
 
-### range maps - 1,344 polygons, 1,298 species
+### range maps - 1,299 polygons, 1,345 species
 rangemaps <- st_read(file.path(rangeDir, "polygons", "FW_CRABS.shp"))
 
-### Species with hydrobasin level data - 438,145 polygons, 1,299 species
+### Species with hydrobasin level data - 438,167 polygons, 1,300 species
 basins <- read.csv(file.path(rangeDir, "hydrobasins", "crabs_hybas_table.csv"))
 
 ### 9 species don't seem to intersect with hybroBASINs, but they are all South African
 unique(basins$sci_name[basins$hybas_id %in% basins$hybas_id[!basins$hybas_id %in% hydroBasin$hybas_id]])
 
-### Merge with hydroBASINS shapefile and remove species already in range maps - 1 polygon, 1 species
+### Merge with hydroBASINS shapefile - 438,692 polygon, 1,300 species
 basins <- left_join(hydroBasin, basins, by = "hybas_id", relationship = "many-to-many") %>%
   filter(!is.na(sci_name)) %>%
-  filter(sci_name %in% basins$sci_name[!basins$sci_name %in% rangemaps$sci_name]) %>%
+  # filter(sci_name %in% basins$sci_name[!basins$sci_name %in% rangemaps$sci_name]) %>%
   select(-hybas_id, -objectid, -dist_comm)
 
-### Species with point data - buffer by 25km (using equal-area projection) - 1,133 polygons, 24 species
+### Species with point data - buffer by 25km (using equal-area projection) - 1,204 polygons, 27 species
 pts <- read.csv(file.path(rangeDir, "points", "FW_CRABS_points.csv")) %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
+  st_as_sf(coords = c("dec_long", "dec_lat")) %>%
   st_set_crs(st_crs(rangemaps)) %>%
   st_transform(st_crs(regions)) %>%
   st_buffer(dist = 25000) %>%
   st_transform(st_crs(rangemaps))
 
-### Merge all maps together - 2,478 polygons, 1,299 species
+### Merge all maps together - 441,241 polygons, 1,300 species
 rangemaps <- bind_rows(rangemaps, basins, pts)
 
-# ### Remove marine species - 2,478 polygons, 1,299 species
+# ### Remove marine species - 441,241 polygons, 1,300 species
 rangemaps <- filter(rangemaps, marine == "false" | is.na(marine))
 
-### filter out non-relevant range polygons - 2,454 polygons, 1,298 species
+### filter out non-relevant range polygons - 441,197 polygons, 1,299 species
 rangemaps <- rangemaps %>%
   filter(!presence %in% c(4, 5, 6)) %>% # 1 = Extant; 2 = Prob. extant; 3 = Poss. extant; 4 = Poss. extinct; 5 = Extinct; 6 = Presence uncertain
   filter(!origin   %in% c(3, 4, 6)) %>% # 1 = Native; 2 = Reintroduced; 3 = Introduced; 4 = Vagrant; 5 = Origin uncertain; 6 = Assisted colonisation
   filter(!seasonal %in% c(3, 4))        # 1 = Resident; 2 = Breeding season; 3 = Non-breeding season; 4 = Passage; 5 = Seasonal occurrence uncertain
 
-### total species list extracted from range maps - 1,298 species (+ 9 missing species)
+### total species list extracted from range maps - 1,299 species
 spList <- unique(rangemaps$sci_name)
 
 done <- c(list.files(spDir),
@@ -138,7 +136,7 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,    # species rang
                                  spList           = spList,       # species list to subset rangemaps with
                                  spDir            = spDir,        # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,        # overwrite existing species intersections, otherwise skips
-                                 threads          = 5)            # no cores for parallelisation
+                                 threads          = 12)            # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#

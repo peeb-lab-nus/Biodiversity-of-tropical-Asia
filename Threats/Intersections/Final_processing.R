@@ -27,16 +27,17 @@ projDir  <- "Threats"                                             # project dir
 divDir   <- file.path("Diversity_and_endemism", "directory")      # path to 'Diversity_and_endemism' folder (for non-IUCN intersections)
 
 ### You shouldn't need to adjust these folders
-iucnDir  <- file.path(projDir, "Intersections", "Intersections", "Final")  # dir with IUCN range map intersections
-interDir <- file.path(divDir,  "Intersections", "Intersections")           # dir with intersections in the 'Diversity_and_endemism' folder
-resDir   <- file.path(projDir, "Intersections")                            # dir to save results to
+iucnDir  <- file.path(projDir, "Intersections", "Intersections")  # dir with IUCN range map intersections
+interDir <- file.path(divDir,  "Intersections", "Intersections")  # dir with intersections in the 'Diversity_and_endemism' folder
+resDir   <- file.path(projDir, "Intersections")                   # dir to save results to
 
 #==================================================================================================#
 #------------------------------------------- Processing -------------------------------------------#
 #==================================================================================================#
 
 ### List of taxa
-taxa <- read_csv(file.path(projDir, "Global_totals.csv"))
+taxa <- read_csv(file.path(projDir, "Global_totals.csv")) %>%
+  filter(Name != "Sponges")
 taxa <- taxa$Name
 
 for(taxon in taxa) {
@@ -53,7 +54,7 @@ for(taxon in taxa) {
   
   ### For other groups with just checklists copy from intersections folder
   if(taxon %in% c("angiosperms", "bees", "butterflies", "chilopods", "diplopods", "diptera", "ferns",
-                  "gymnosperms", "lycophytes", "miridae", "phasmids", "spiders", "sponges", "trichoptera")) {
+                  "gymnosperms", "lycophytes", "miridae", "phasmids", "spiders", "trichoptera")) {
     dd <- read.csv(file.path(interDir, paste0("Intersections_bioregions_", taxon, ".csv")))
   }
   

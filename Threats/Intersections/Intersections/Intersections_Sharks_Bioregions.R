@@ -3,14 +3,14 @@
 ### Note: there is some overlap with freshwater fish
 ### Charlie Marsh
 ### charliem2003@github
-### 05/2025
+### 07/2026
 ###
 ### Regions map used: MEOW_BTAS
-### Taxonomy used:    IUCN 2025-1 - downloaded 09/05/2025
-### Rangemaps used:   IUCN 2025-1 - downloaded 09/05/2025
+### Taxonomy used:    IUCN 2025.2 - downloaded 11/06/2026
+### Rangemaps used:   IUCN 2025.2 - downloaded 11/06/2026
 ###
-### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025-1.
-###   https://www.iucnredlist.org. Downloaded on 09/05/2025.
+### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025.2.
+###   https://www.iucnredlist.org. Downloaded on 11/06/2026.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -27,20 +27,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                             # project dir
-rangeDir  <- file.path("IUCN", "rangemaps", "directory")           # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")         # dir that contains the iucn assessments
-gadmDir   <- file.path("GADM", "directory")                        # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
-hydroDir  <- file.path("IUCN", "HydroBasins", "directory")         # dir that contains the hydrobasins data
+projDir   <- "Threats"
+rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
+taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
+gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
-regionDir <- file.path(projDir, "Data")                            # dir that contains the subregions data
-funDir    <- file.path(projDir, "Analysis_functions")              # dir that contains the function scripts
-resDir    <- file.path(projDir, "Intersections")                   # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Sharks_and_rays") # dir to save species intersections to
+regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
+funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
+resDir    <- file.path(projDir, "Intersections")                # dir to save results to
+spDir     <- file.path(resDir,  "Intersections", "Sharks")      # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -74,13 +72,13 @@ hydroBasin <- bind_rows(st_read(file.path(hydroDir, "HydroBASINS_level08", "Hydr
                         st_read(file.path(hydroDir, "HydroBASINS_level12", "HydroBASINS_level12_w_attributes_2023_08.shp"))) %>%
   select(hybas_id)
 
-### range maps - 1,297 polygons, 1,213 species names
+### range maps - 1,336 polygons, 1,226 species names
 rangemaps <- st_read(file.path(rangeDir, "polygons", "SHARKS_RAYS_CHIMAERAS.shp"))
 
-### Species with hyrdrobasins data - buffer by 25km (using equal-area projection) - 1 polygon, 1 species
+### Species with hyrdrobasins data - buffer by 25km (using equal-area projection) - 29,478 polygon, 50 species
 basins <- read.csv(file.path(rangeDir, "hydrobasins", "chondrichythes_hybas_table.csv")) 
 
-### Merge with hydroBASINS shapefile and remove species already in range maps - 11,875 polygons, 28 species
+### Merge with hydroBASINS shapefile and remove species already in range maps - 29,480 polygons, 50 species
 basins <- left_join(hydroBasin, basins, by = "hybas_id", relationship = "many-to-many") %>%
   filter(!is.na(sci_name)) %>%
   # filter(sci_name %in% basins$sci_name[!basins$sci_name %in% rangemaps$sci_name]) %>%
@@ -94,19 +92,19 @@ pts <- read.csv(file.path(rangeDir, "points", "SHARKS_RAYS_CHIMAERAS_points.csv"
   st_buffer(dist = 25000) %>%
   st_transform(st_crs(rangemaps))
 
-### Merge all maps together - 13,173 polygons, 1,214 species
+### Merge all maps together - 30,817 polygons, 1,227 species
 rangemaps <- bind_rows(rangemaps, basins, pts)
 
-### Include only marine species - 13,127 polygons, 1,202 species
+### Include only marine species - 30,737 polygons, 1,226 species
 rangemaps <- filter(rangemaps, marine == "true" | is.na(marine))
 
-### filter out non-relevant range polygons - 12,815 polygons, 1,199 species
+### filter out non-relevant range polygons - 29,868 polygons, 1,223 species
 rangemaps <- rangemaps %>%
   filter(!presence %in% c(4, 5, 6)) %>% # 1 = Extant; 2 = Prob. extant; 3 = Poss. extant; 4 = Poss. extinct; 5 = Extinct; 6 = Presence uncertain
   filter(!origin   %in% c(3, 4, 6)) %>% # 1 = Native; 2 = Reintroduced; 3 = Introduced; 4 = Vagrant; 5 = Origin uncertain; 6 = Assisted colonisation
   filter(!seasonal %in% c(3, 4))        # 1 = Resident; 2 = Breeding season; 3 = Non-breeding season; 4 = Passage; 5 = Seasonal occurrence uncertain
 
-### total species list extracted from range maps - 1,199 species - 1,196 with range maps
+### total species list extracted from range maps - 1,223 species
 ### three species have no valid range maps - Bythaelurus alcockii, Carcharhinus obsoletus, Raja pita
 spList <- unique(rangemaps$sci_name)
 
@@ -139,7 +137,7 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,  # species range 
                                  spList           = spList,     # species list to subset rangemaps with
                                  spDir            = spDir,      # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,      # overwrite existing species intersections, otherwise skips
-                                 threads          = 5)          # no cores for parallelisation
+                                 threads          = 2)          # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#

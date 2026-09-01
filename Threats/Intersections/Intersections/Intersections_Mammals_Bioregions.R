@@ -2,14 +2,14 @@
 ### Run intersections between mammal rangemaps (IUCN) and bioregions
 ### Charlie Marsh
 ### charliem2003@github
-### 09/2024
+### 06/2026
 ###
 ### Regions map used: Bioregions_rangemaps
-### Taxonomy used:    IUCN 2024.1 - downloaded 29/08/2024
-### Rangemaps used:   IUCN 2024.1 - downloaded 13/09/2024
+### Taxonomy used:    IUCN 2025.2 - downloaded 11/06/2026
+### Rangemaps used:   IUCN 2025.2 - downloaded 11/06/2026
 ###
-### CITATION: IUCN 2024. The IUCN Red List of Threatened Species. 2024.1.
-###      https://www.iucnredlist.org. Downloaded on 24/05/2024.
+### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025.2.
+###   https://www.iucnredlist.org. Downloaded on 11/06/2026.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -26,19 +26,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                          # project dir
+projDir   <- "Threats"
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the iucn assessments
+taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
 regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
 funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
 resDir    <- file.path(projDir, "Intersections")                # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Mammals")      # dir to save species intersections to
+spDir     <- file.path(resDir,  "Intersections", "Mammals")     # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -66,23 +65,20 @@ regions <- st_read(file.path(regionDir, "Bioregions_rangemaps.gpkg"))
 ### global GADM for masking out dodgy coastlines in IUCN range maps on global range maps
 gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
 
-### Read in range maps - 12,959 polygons, 5,907 species
-rangemaps <- st_read(file.path(rangeDir, "MAMMALS.shp"))
+### Read in range maps - 13,238 polygons, 5,936 species
+rangemaps <- bind_rows(st_read(file.path(rangeDir, "MAMMALS_PART1.shp")),
+                       st_read(file.path(rangeDir, "MAMMALS_PART2.shp")))
 
-### Remove marine ranges - 12,704 polygons, 5,762 species
+### Remove marine ranges - 12,955 polygons, 5,808 species
 rangemaps <- filter(rangemaps, marine == "false")
 
-### filter out non-relevant range polygons - 11,970 polygons, 5,720 species
+### filter out non-relevant range polygons - 12,195 polygons, 5,764 species
 rangemaps <- rangemaps %>%
   filter(!presence %in% c(4, 5, 6)) %>% # 1 = Extant; 2 = Prob. extant; 3 = Poss. extant; 4 = Poss. extinct; 5 = Extinct; 6 = Presence uncertain
   filter(!origin   %in% c(3, 4, 6)) %>% # 1 = Native; 2 = Reintroduced; 3 = Introduced; 4 = Vagrant; 5 = Origin uncertain; 6 = Assisted colonisation
   filter(!seasonal %in% c(3, 4))        # 1 = Resident; 2 = Breeding season; 3 = Non-breeding season; 4 = Passage; 5 = Seasonal occurrence uncertain
 
-### There are two cases of subpopulations being given non-scientific names. Correct
-rangemaps$sci_name[rangemaps$sci_name == "Orcaella brevirostris Mekong River subpopulation"] <- "Orcaella brevirostris"
-rangemaps$sci_name[rangemaps$sci_name == "Panthera leo Asiatic subpopulation"] <- "Panthera leo"
-
-### total species list extracted from range maps - 5719 species for full range maps
+### total species list extracted from range maps - 5,764 species for full range maps
 spList <- unique(rangemaps$sci_name)
 
 done <- c(list.files(spDir, include.dirs = FALSE, recursive = FALSE),
@@ -112,7 +108,7 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,    # species rang
                                  spList           = spList,       # species list to subset rangemaps with
                                  spDir            = spDir,        # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,        # overwrite existing species intersections, otherwise skips
-                                 threads          = 6)            # no cores for parallelisation
+                                 threads          = 7)           # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#

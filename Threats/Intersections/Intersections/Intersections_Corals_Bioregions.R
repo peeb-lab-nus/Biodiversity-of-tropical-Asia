@@ -2,14 +2,14 @@
 ### Run intersections between hard corals (IUCN) and marine ecoregions
 ### Charlie Marsh
 ### charliem2003@github
-### 05/2025
+### 07/2026
 ###
 ### Regions map used: MEOW_BTAS
-### Taxonomy used:    IUCN 2025-1 - downloaded 09/05/2025
-### Rangemaps used:   IUCN 2025-1 - downloaded 09/05/2025
+### Taxonomy used:    IUCN 2025.2 - downloaded 11/06/2026
+### Rangemaps used:   IUCN 2025.2 - downloaded 11/06/2026
 ###
-### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025-1.
-###   https://www.iucnredlist.org. Downloaded on 09/05/2025.
+### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025.2.
+###   https://www.iucnredlist.org. Downloaded on 11/06/2026.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -26,19 +26,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                          # project dir
+projDir   <- "Threats"
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the iucn assessments
+taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
 regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
 funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
 resDir    <- file.path(projDir, "Intersections")                # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Corals")       # dir to save species intersections to
+spDir     <- file.path(resDir,  "Intersections", "Corals")      # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -108,7 +107,7 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,  # species range 
                                  spList           = spList,     # species list to subset rangemaps with
                                  spDir            = spDir,      # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,      # overwrite existing species intersections, otherwise skips
-                                 threads          = 20)          # no cores for parallelisation
+                                 threads          = 10)         # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#

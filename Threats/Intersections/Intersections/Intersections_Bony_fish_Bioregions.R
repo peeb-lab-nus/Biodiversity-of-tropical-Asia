@@ -6,14 +6,14 @@
 ### are covered in sharks and rays.
 ### Charlie Marsh
 ### charliem2003@github
-### 05/2025
+### 07/2026
 ###
 ### Regions map used: MEOW_BTAS
-### Taxonomy used:    IUCN 2025-1 - downloaded 09/05/2025
-### Rangemaps used:   IUCN 2025-1 - downloaded 09/05/2025
+### Taxonomy used:    IUCN 2025.2 - downloaded 11/06/2026
+### Rangemaps used:   IUCN 2025.2 - downloaded 11/06/2026
 ###
-### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025-1.
-###   https://www.iucnredlist.org. Downloaded on 09/05/2025.
+### CITATION: IUCN 2025. The IUCN Red List of Threatened Species. 2025.2.
+###   https://www.iucnredlist.org. Downloaded on 11/06/2026.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -30,19 +30,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                          # project dir
+projDir   <- "Threats"
 rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the iucn assessments
+taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
 regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
 funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
 resDir    <- file.path(projDir, "Intersections")                # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Bony_fish")    # dir to save species intersections to
+spDir     <- file.path(resDir,  "Intersections", "Bony_fish")   # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -70,39 +69,24 @@ regions <- st_read(file.path(regionDir, "MEOW_BTAS.gpkg"))
 ### global GADM for masking out dodgy coastlines in IUCN range maps on global range maps
 gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
 
-### range maps - 15,383 polygons, 14,281 species names
-rangemaps <- rbind(st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART1.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART2.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART3.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART4.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART5.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART6.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART7.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART8.shp")),
-                   st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART9.shp")))
+### range maps - 15,505 polygons, 14,394 species names
+rangemaps <- bind_rows(
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART1.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART2.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART3.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART4.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART5.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART6.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART7.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART8.shp")),
+  st_read(file.path(rangeDir, "polygons", "MARINEFISH_PART9.shp"))
+)
 
 ### Read in point data. The IUCN is messed up and has text strings not in quotes that contain commas
 ### This makes it very tricky to read in. We'll have to go through line by line and select the first
 ### six columns and the final ten valid columns
-pts <- readr::read_csv(file.path(rangeDir, "points", "MARINEFISH_points.csv"),
-                       col_types = c("d", "d", "c", "d", "d", "d", "c", "d", rep("c", 18), "d", "d"))
-ptsClean <- pts[1, c(1:6, 19:28)]
-ptsClean$dec_lat  <- as.numeric(ptsClean$dec_lat)
-ptsClean$dec_long <- as.numeric(ptsClean$dec_long)
-pb <- txtProgressBar(2, nrow(pts), style = 3)
-for(i in 2:nrow(pts)) {
-  setTxtProgressBar(pb, i)
-  ptsRow <- pts[i, ]
-  validCells <- which(!is.na(ptsRow))
-  # ptsRow <- ptsRow[c(1:6, validCells[(length(validCells) - 9):length(validCells)])]
-  ptsRow <- ptsRow[c(1:6, (max(validCells) - 9):max(validCells))]
-  names(ptsRow) <- names(ptsClean)
-  ptsRow$dec_lat  <- as.numeric(ptsRow$dec_lat)
-  ptsRow$dec_long <- as.numeric(ptsRow$dec_long)
-  ptsClean <- rbind(ptsClean, ptsRow)
-}
-filter(ptsClean, is.na(dec_long) | is.na(dec_lat))
-ptsClean <- filter(ptsClean, !is.na(dec_long) & !is.na(dec_lat))
+### THIS HAS BEEN CORRECTED IN v2025.2
+ptsClean <- readr::read_csv(file.path(rangeDir, "points", "MARINEFISH_points.csv"))
 
 table(ptsClean$presence, useNA = "always")
 table(ptsClean$origin,   useNA = "always")
@@ -113,7 +97,7 @@ table(ptsClean$order_,   useNA = "always")
 table(ptsClean$category, useNA = "always")
 filter(ptsClean, is.na(legend))
 
-### Species with point data - buffer by 25km (using equal-area projection) - 89,755 polygons, 158 species
+### Species with point data - buffer by 25km (using equal-area projection) - 89,761 polygons, 158 species
 ptsClean <- ptsClean %>%
   st_as_sf(coords = c("dec_long", "dec_lat")) %>%
   st_set_crs(st_crs(rangemaps)) %>%
@@ -121,19 +105,20 @@ ptsClean <- ptsClean %>%
   st_buffer(dist = 25000) %>%
   st_transform(st_crs(rangemaps))
 
-### Merge all maps together - 105,144 polygons, 14,283 species
-rangemaps <- bind_rows(rangemaps, ptsClean)
+### Merge all maps together - 105,266 polygons, 14,396 species
+rangemaps <- bind_rows(select(rangemaps, -subpop, -tax_comm),
+                       select(ptsClean, -subpop, -tax_comm))
 
-### Separate out the bony fish (Actinopterygii) - 103,886 polygons, 13,103 species
+### Separate out the bony fish (Actinopterygii) - 104,009 polygons, 13,214 species
 rangemaps <- filter(rangemaps, class != "CHONDRICHTHYES")
 
-### filter out non-relevant range polygons - 83,911 polygons, 13,084 species
+### filter out non-relevant range polygons - 84,033 polygons, 13,195 species
 rangemaps <- rangemaps %>%
   filter(!presence %in% c(4, 5, 6)) %>% # 1 = Extant; 2 = Prob. extant; 3 = Poss. extant; 4 = Poss. extinct; 5 = Extinct; 6 = Presence uncertain
   filter(!origin   %in% c(3, 4, 6)) %>% # 1 = Native; 2 = Reintroduced; 3 = Introduced; 4 = Vagrant; 5 = Origin uncertain; 6 = Assisted colonisation
   filter(!seasonal %in% c(3, 4))        # 1 = Resident; 2 = Breeding season; 3 = Non-breeding season; 4 = Passage; 5 = Seasonal occurrence uncertain
 
-### total species list extracted from range maps - 13,084 species
+### total species list extracted from range maps - 13,195 species
 spList <- unique(rangemaps$sci_name)
 
 done <- c(list.files(spDir),
@@ -162,11 +147,11 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,  # species range 
                                  gadm             = gadm,       # global gadm for initial masking out where coastlines don't overlap
                                  marine           = TRUE,       # if TRUE masks out land areas. If FALSE masks out marine areas
                                  crop_to_region   = TRUE,       # exclude species outside region
-                                 areaThresh       = 100000000,   # area threshold in km2 for when to split the shapefile in to multiple parts
+                                 areaThresh       = 10000000,   # area threshold in km2 for when to split the shapefile in to multiple parts
                                  spList           = spList,     # species list to subset rangemaps with
                                  spDir            = spDir,      # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,      # overwrite existing species intersections, otherwise skips
-                                 threads          = 16)          # no cores for parallelisation
+                                 threads          = 2)          # no cores for parallelisation
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#

@@ -2,15 +2,13 @@
 
 All scripts required for the analyses, results and figures in Lim et al '*The rich, unique, and threatened biodiversity of tropical Asia*'.
 
-The project is organised into four folders which follow the broad sections of the manuscript:
+The project is organised into three folders which follow the broad sections of the manuscript:
 
-1) Origins and assembly
+1)  Diversity and endemism
 
-2) Diversity and endemism
+2)  Biodiversity gaps
 
-3) Biodiversity gaps
-
-4) Threats
+3)  Threats
 
 Within each folder is a ReadMe file outlining the scripts required. The order of running the scripts outlined in each ReadMe file is important - each script will process the raw data and produce intermediary data files necessary for generating the final figures.
 

@@ -5,14 +5,11 @@
 ### 04/2024
 ###
 ### Regions map used: Bioregions_rangemaps
-### Taxonomy used:    HBW_BirdLife List of Birds v.81 - downloaded 06/12/2023
-### Rangemaps used:   BirdLife international 2023.1 - downloaded 06/12/2023
+### Taxonomy used:    HBW_BirdLife List of Birds v.10 - downloaded 11/06/2026
+### Rangemaps used:   BirdLife international 2025_2 - downloaded 11/06/2026
 ###
-### CITATION: BirdLife International and Handbook of the Birds of the World (2023) Bird species
-###   distribution maps of the world. Version 2023.1. Available at http://datazone.birdlife.org/species/requestdis.
-### HBW and BirdLife International (2023) Handbook of the Birds of the World and BirdLife International
-###   digital checklist of the birds of the world. Version 7. Available at:
-###   http://datazone.birdlife.org/userfiles/file/Species/Taxonomy/HBW-BirdLife_Checklist_v8_Dec23.zip
+### CITATION: BirdLife International and Handbook of the Birds of the World (2025) Bird species 
+###   distribution maps of the world. Version 2025.2. Available at http://datazone.birdlife.org/species/requestdis.
 ###
 ### saves csv with the range area (km2) occurring within each region/grid cell along with total
 ### range size (range_area)
@@ -46,19 +43,18 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(units)
-library(parallel)
 
 ### Locations of data, scripts and results - ADJUST FOR YOUR STRUCTURE
-projDir   <- "Threats"                                          # project dir
-rangeDir  <- file.path("BirdLife", "rangemaps", "directory")    # dir that contains the rangemaps data
-taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the iucn assessments
+projDir   <- "Threats"
+rangeDir  <- file.path("IUCN", "rangemaps", "directory")        # dir that contains the rangemaps data
+taxonDir  <- file.path("IUCN", "assessments", "directory")      # dir that contains the taxonomy data (for description year)
 gadmDir   <- file.path("GADM", "directory")                     # dir that contains GADM in equal-area projection (called 'GADM_410_land_Equal_Area.gpkg')
 
 ### You shouldn't need to adjust these folders
 regionDir <- file.path(projDir, "Data")                         # dir that contains the subregions data
 funDir    <- file.path(projDir, "Analysis_functions")           # dir that contains the function scripts
 resDir    <- file.path(projDir, "Intersections")                # dir to save results to
-spDir     <- file.path(resDir, "Intersections", "Birds")        # dir to save species intersections to
+spDir     <- file.path(resDir,  "Intersections", "Birds")       # dir to save species intersections to
 
 ### Create folders for storing species intersections
 if(!dir.exists(resDir)) { dir.create(resDir, recursive = TRUE) }
@@ -79,13 +75,13 @@ source(file.path(funDir, "Intersections", "convertToPA.R"))
 source(file.path(funDir, "Discovery_rates", "clean_publication_dates.R"))
 
 ### regions data to calculate polygons for
-regions <- st_read(file.path(regionDir, "Bioregions_rangemaps.gpkg"))
+regions <- st_read(file.path(regionDir, "Bioregions", "Bioregions_rangemaps.gpkg"))
 
 ### global GADM for masking out dodgy coastlines in IUCN range maps on global range maps
-gadm <- st_read(file.path(gadmDir, "GADM_410_land_Equal_Area.gpkg"))
+gadm <- st_read(file.path(regionDir, "countries", "GADM_410_land_Equal_Area.gpkg"))
 
-### range maps - 17,522 polygons, 11,184 species
-rangemaps <- st_read(file.path(rangeDir, "BOTW.gdb"))
+### range maps - 17,377 polygons, 11,170 species
+rangemaps <- st_read(file.path(rangeDir, "BOTW_2025.gpkg"))
 
 ### add in sensitive species and append to range maps - 17,549 polygons, 11,196 species
 sensitiveSp <- st_read(file.path(rangeDir, "Sensitive_species", "SppDataRequest.shp"))
@@ -100,14 +96,14 @@ rangemaps <- rangemaps %>%
   filter(!seasonal %in% c(3, 4))        # 1 = Resident; 2 = Breeding season; 3 = Non-breeding season; 4 = Passage; 5 = Seasonal occurrence uncertain
 
 ### add in taxonomy details to get family info
-taxonomy <- read.csv(file.path(taxonDir, "HBW_BirdLife List of Birds v.81.csv"))
+taxonomy <- read.csv(file.path(taxonDir, "taxonomy.csv"))
 rangemaps <- rangemaps %>%
-  left_join(select(taxonomy, Scientific.name, Family.name), join_by("sci_name" == "Scientific.name"))
+  left_join(select(taxonomy, scientificName, familyName), join_by("sci_name" == "scientificName"))
 
 ### filter out pelagics - 13,226 polygons, 10,798 species
 rangemaps <- rangemaps %>%
-  filter(!Family.name %in% c("Phaethontidae", "Spheniscidae", "Oceanitidae", "Hydrobatidae", "Diomedeidae",
-                             "Procellariidae", "Fregatidae", "Sulidae", "Stercorariidae", "Alcidae"))
+  filter(!familyName %in% c("Phaethontidae", "Spheniscidae", "Oceanitidae", "Hydrobatidae", "Diomedeidae",
+                            "Procellariidae", "Fregatidae", "Sulidae", "Stercorariidae", "Alcidae"))
 
 ### total species list extracted from range maps - 10,798 species
 spList <- unique(rangemaps$sci_name)
@@ -118,6 +114,8 @@ done <- c(list.files(spDir),
 done <- gsub("_", " ", done)
 spList <- spList[!spList %in% gsub(".csv", "", done)]
 length(spList)
+
+rangemaps <- filter(rangemaps, sci_name %in% spList)
 
 ### reproject to equal-area projection
 rangemaps <- rangemaps %>%
@@ -133,23 +131,25 @@ intersections_rangemaps_parallel(rangemaps        = rangemaps,    # species rang
                                  regionNameCol    = "Bioregion",  # column name where region names are kept
                                  gadm             = gadm,         # global gadm for initial masking out where coastlines don't overlap
                                  crop_to_region   = TRUE,         # exclude species outside region
-                                 areaThresh       = 10000000,     # area threshold in km2 for when to split the shapefile in to multiple parts
+                                 areaThresh       = 1000000,     # area threshold in km2 for when to split the shapefile in to multiple parts
                                  spList           = spList,       # species list to subset rangemaps with
                                  spDir            = spDir,        # directory to save individual species intersections
                                  overwriteSpFiles = FALSE,        # overwrite existing species intersections, otherwise skips
-                                 threads          = 3)            # no cores for parallelisation
+                                 threads          = 5)            # no cores for parallelisation
 
 ### One species, Rhyticeros narcondami (Narcondam Hornbill), the range map is shifted off the island
 ### so that no part of the range overlaps land. Input it manually
 sp <- "Rhyticeros narcondami"
-fileName <- file.path(spDir, "Non-native", paste0(gsub(" ", "_", sp, ".csv")))
+fileName <- file.path(spDir, "Non-native", paste0(gsub(" ", "_", sp), ".csv"))
 if(file.exists(fileName)) { file.remove(fileName) }
 spMap <- filter(rangemaps, sci_name == sp)
 overlap <- data.frame(Species        = gsub(" ", "_", sp),
                       Region         = "Andamans",
                       Range_area     = round(drop_units(sum(set_units(st_area(spMap), km^2))), 4),
                       Intersect_area = round(drop_units(sum(set_units(st_area(spMap), km^2))), 4))
-write.csv(overlap, fileName, quote = FALSE, row.names = FALSE)
+write.csv(overlap,
+          file.path(spDir, paste0(gsub(" ", "_", sp), ".csv")),
+          quote = FALSE, row.names = FALSE)
 
 #==================================================================================================#
 #---------------------------------- Merge together species files ----------------------------------#
@@ -173,21 +173,15 @@ intersections <- intersections %>%
   mutate(Species = gsub(" ", "_", Species))
 
 ### clean taxonomy data frame to get taxonomic info and year described
-taxonomy <- read.csv(file.path(taxonDir, "HBW_BirdLife List of Birds v.81.csv"))  %>%
-  select(Scientific.name, Family.name) %>%
-  rename(Species = Scientific.name, Family = Family.name) %>%
-  mutate(Species = gsub(" ", "_", Species))
-
-### extract year described from shapefiles
-year <- st_read(file.path(rangeDir, "BOTW.gdb"), layer = "Checklist_v8_txt") %>%
-  mutate(Year = clean_publication_dates(Authority)) %>%
-  mutate(Species = gsub(" ", "_", ScientificName)) %>%
-  select(Species, Year)
+taxonomy <- read.csv(file.path(taxonDir, "taxonomy.csv")) %>%
+  mutate(scientificName = gsub(" ", "_", scientificName)) %>%
+  mutate(Year = clean_publication_dates(authority)) %>%
+  rename(Species = scientificName, Family = familyName) %>%
+  select(Species, Family, Year)
 
 ### merge intersections with taxonomy data frame
 intersections <- intersections %>%
   left_join(taxonomy, by = "Species") %>%
-  left_join(year, by = "Species") %>%
   mutate(Genus = sapply(Species, function(x) strsplit(x, "_")[[1]][1])) %>%
   relocate(Species, Genus, Family, Year)
 
