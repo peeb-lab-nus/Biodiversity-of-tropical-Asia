@@ -1,8 +1,8 @@
-## Analysis and results scripts for the Biogeography of Tropical Asia project
+## Analysis and results scripts for the '*Tropical Asia harbours a quarter of Earth’s species: knowledge gaps and priorities for protecting a global biodiversity hotspot*'
 
-## - Diversity and endemism analyses
+## - Diversity and endemism and species discoevery analyses
 
-Scripts to carry out analyses for the 'Diversity and endemism' section of Lim et al. 'The rich, unique, and threatened biodiversity of tropical Asia'. First, we generate checklists of species present in each subregion, then these are summarised to create the tables and figures in the manuscript.
+Scripts to carry out analyses for the 'Diversity and endemism' and 'Rates of species discovery' sections of Lim et al '*Tropical Asia harbours a quarter of Earth’s species: knowledge gaps and priorities for protecting a global biodiversity hotspot*'. First, we generate checklists of species present in each subregion, then these are summarised to create the tables and figures in the manuscript.
 
 Also runs the 'Rates of species discovery’ analyses.
 
@@ -18,29 +18,29 @@ As we don't own the underlying data, in each case you will need to access the da
 
 Input data required (depends on taxon):
 
--   various spatial data (e.g. shapefiles with the subregions) stored in folder 'Data'.
+- various spatial data (e.g. shapefiles with the subregions) stored in folder 'Data'.
 
--   the biodiversity data source (outlined at top of each script).
+- the biodiversity data source (outlined at top of each script).
 
--   if necessary, a separate taxonomy information source for description dates and higher-order taxonomic information (outlined at top of each script).
+- if necessary, a separate taxonomy information source for description dates and higher-order taxonomic information (outlined at top of each script).
 
--   You will need to create a version of GADM called 'GADM_410_land_Equal_Area.gpkg'. This is simply the global GADM that has been unioned (i.e. all land borders removed) and reprojected to that of the rest of the project: World Cylindrical Equal Area (+proj=cea +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs). This is to act as a mask on top of the range maps to remove parts of range that fall in ocean areas. You may need to do some manual cleaning within New Guinea and a few other locations where the internal borders within GADM have not been aligned properly.
+- You will need to create a version of GADM called 'GADM_410_land_Equal_Area.gpkg'. This is simply the global GADM that has been unioned (i.e. all land borders removed) and reprojected to that of the rest of the project: World Cylindrical Equal Area (+proj=cea +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs). This is to act as a mask on top of the range maps to remove parts of range that fall in ocean areas. You may need to do some manual cleaning within New Guinea and a few other locations where the internal borders within GADM have not been aligned properly.
 
--   HydroBASINS data (2023/08 version) available on the IUCN website. You will need levels 08, 10 and 12 - see <https://www.iucnredlist.org/resources/spatial-data-download>
+- HydroBASINS data (2023/08 version) available on the IUCN website. You will need levels 08, 10 and 12 - see <https://www.iucnredlist.org/resources/spatial-data-download>
 
--   The GBIF taxonomic backbone - available at <https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c>
+- The GBIF taxonomic backbone - available at <https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c>
 
--   WoRMS taxonomic data - request here <https://www.marinespecies.org/usersrequest.php>
+- WoRMS taxonomic data - request here <https://www.marinespecies.org/usersrequest.php>
 
 ### 2. Summarise diversity and endemism in tropical Asia and subregions
 
 Once all intersections have been run results can be summarised across the region. The three scripts necessary are in the folder 'Endemicity'.
 
--   First, 'calc_endemicity.R' will read in the intersections files inside the folder 'Intersections/Intersections', and summarise richness and endemicity for tropical Asia, and for each subregion. Results are saved as .csv files in the folder 'Results'. Diversity and endemicity are calculated at the taxon-level, and also summarised across the four taxonomic groups.
+- First, 'calc_endemicity.R' will read in the intersections files inside the folder 'Intersections/Intersections', and summarise richness and endemicity for tropical Asia, and for each subregion. Results are saved as .csv files in the folder 'Results'. Diversity and endemicity are calculated at the taxon-level, and also summarised across the four taxonomic groups.
 
--   'plot_endemicity.R' generates the figures in the main manuscript and supplementary material, and writes them to the folder 'Figures'.
+- 'plot_endemicity.R' generates the figures in the main manuscript and supplementary material, and writes them to the folder 'Figures'.
 
--   'Generate_summary_tables.R' will generate the summary tables of diveristy and endemism for each taxon for tropical Asia and each subregion.
+- 'Generate_summary_tables.R' will generate the summary tables of diveristy and endemism for each taxon for tropical Asia and each subregion.
 
 ### 3. Description rates
 

@@ -1,8 +1,8 @@
-## Analysis and results scripts for the Biogeography of Tropical Asia project
+## Analysis and results scripts for '*Tropical Asia harbours a quarter of Earth’s species: knowledge gaps and priorities for protecting a global biodiversity hotspot*'
 
 ## - Threats analyses
 
-Scripts to carry out analyses for the 'Threats' section of Lim et al. 'The rich, unique, and threatened biodiversity of tropical Asia'. First, we generate checklists of species present in each subregion, then these are summarised to create the tables and figures in the manuscript.
+Scripts to carry out analyses for the 'Conservation assessments' section of Lim et al. '*Tropical Asia harbours a quarter of Earth’s species: knowledge gaps and priorities for protecting a global biodiversity hotspot*''. First, we generate checklists of species present in each subregion, then these are summarised to create the tables and figures in the manuscript.
 
 NOTES:
 
